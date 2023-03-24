@@ -1,5 +1,6 @@
 import { ComponentType, PropsWithChildren, ProviderProps, ReactElement } from 'react'
 import { BrowserRouter as Router } from 'react-router-dom'
+import { AudioPlayerProvider } from '@/app/providers'
 
 type IProviderOrWithValue<T = any> = ComponentType<T> | [ComponentType<T>, T?]
 
@@ -14,4 +15,5 @@ export const combineProviders =
         return <ProviderOrWithValue>{tree}</ProviderOrWithValue>
       }
     }, children as ReactElement)
-export const AllProviders = combineProviders([[Router]])
+
+export const AllProviders = combineProviders([[Router], [AudioPlayerProvider]])

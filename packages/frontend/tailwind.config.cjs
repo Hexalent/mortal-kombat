@@ -11,10 +11,8 @@ module.exports = {
     extend: {
       fontFamily: {
         sans: ['Poppins', ...fontFamily.sans],
-        Poppins: ['Poppins', 'sans-serif']
-      },
-      backgroundImage: {
-        'start-game-bg': "url('/public/background/start-game.jpg')",
+        Poppins: ['Poppins', 'sans-serif'],
+        russo: ['Russo One', 'sans-serif']
       }
     }
   },

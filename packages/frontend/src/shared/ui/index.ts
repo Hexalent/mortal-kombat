@@ -1,2 +1,6 @@
 export { Loader } from './loader'
+export { Audio } from './audio'
+export { MotionButton } from './motion-button'
 export { MotionPage } from './motion-page'
+export { HeroImage } from './hero-image'
+export { ImageWithFallback } from './image-with-fallback'
