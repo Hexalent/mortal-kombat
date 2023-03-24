@@ -1,71 +1,18 @@
 import { MotionPage } from '@/shared/ui'
-import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { heroesSelectors } from '@/entities'
 import { Routes } from '@/shared/configs'
-import { Character, getCharacters } from '@/shared/lib/images'
+import { useCharacterSelection, useKeyboardEvents } from '@/shared/hooks'
 
 export const FighterSelect = () => {
   const navigate = useNavigate()
+  const characters = heroesSelectors.use.characters()
   const selectedHeroes = heroesSelectors.use.selectedHeroes()
   const activeHero = heroesSelectors.use.activeHero()
-  const setActiveHero = heroesSelectors.use.setActiveHero()
-  const selectHero = heroesSelectors.use.selectHero()
 
-  const [characters, setCharacters] = useState<Character[]>([])
+  useCharacterSelection()
 
-  useEffect(() => {
-    getCharacters().then(res => setCharacters(res))
-  }, [])
-
-  useEffect(() => {
-    const handleKeyDown = (event: KeyboardEvent) => {
-      switch (event.code) {
-        case 'ArrowUp':
-          if (activeHero?.number && activeHero.number < 15) {
-            const newActiveHero = characters.find(hero => hero.number === activeHero.number + 10)
-            if (newActiveHero) setActiveHero(newActiveHero)
-          }
-          break
-
-        case 'ArrowDown':
-          if (activeHero?.number && activeHero.number > 4) {
-            const newActiveHero = characters.find(hero => hero.number === activeHero.number - 10)
-            if (newActiveHero) setActiveHero(newActiveHero)
-          }
-          break
-
-        case 'ArrowLeft':
-          if (activeHero?.number && activeHero.number !== 0) {
-            const newActiveHero = characters.find(hero => hero.number === activeHero.number - 1)
-            if (newActiveHero) setActiveHero(newActiveHero)
-          }
-          break
-
-        case 'ArrowRight':
-          if (activeHero?.number && activeHero.number !== 14) {
-            const newActiveHero = characters.find(hero => hero.number === activeHero.number + 1)
-            if (newActiveHero) setActiveHero(newActiveHero)
-          }
-          break
-
-        case 'Enter':
-          if (selectedHeroes.length < 2 && activeHero) {
-            selectHero(activeHero)
-            setActiveHero(selectedHeroes.length === 0 ? characters[0] : characters[1])
-          }
-          break
-
-        default:
-          break
-      }
-    }
-
-    document.addEventListener('keydown', handleKeyDown)
-    return () => {
-      document.removeEventListener('keydown', handleKeyDown)
-    }
-  }, [activeHero, characters, selectHero, selectedHeroes, setActiveHero])
+  useKeyboardEvents()
 
   const start = () => {
     if (selectedHeroes.length === 2) {

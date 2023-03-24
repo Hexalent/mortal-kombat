@@ -30,5 +30,5 @@ export const getCharacters = async (): Promise<Character[]> => {
 
   return Object.values(charactersMap).map((character, idx) => {
     return { ...(character as Character), number: idx }
-  })
+  }) as Character[]
 }
