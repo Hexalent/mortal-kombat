@@ -3,17 +3,16 @@ import { useEffect, useState } from 'react'
 import { getImages, TCharactersObj } from '@/shared/lib/images/getImages'
 import { useNavigate } from 'react-router-dom'
 import { Routes } from '@/shared/configs'
+import { useHeroes } from '@/entities'
 
 export const FighterSelect = () => {
   const navigate = useNavigate()
-
+  const [setupFirstPlayer, setupSecondPlayer] = useHeroes(state => [state.setFirstPlayer, state.setSecondPlayer])
   const [firstPlayer, setFirstPlayer] = useState<number | null>(null)
   const [secondPlayer, setSecondPlayer] = useState<number | null>(null)
 
   const [characters, setCharacters] = useState<TCharactersObj[]>([])
   const [active, setActive] = useState<number>(0)
-
-  console.log(firstPlayer, secondPlayer, active)
 
   const keyDownHandler = (event: KeyboardEvent) => {
     if (event.code === 'ArrowUp') {
@@ -46,7 +45,13 @@ export const FighterSelect = () => {
     }
   }
 
-  const start = () => navigate('/' + Routes.FIGHTER_VIEW)
+  const start = () => {
+    if (firstPlayer !== null && secondPlayer !== null) {
+      setupFirstPlayer(characters[firstPlayer])
+      setupSecondPlayer(characters[secondPlayer])
+      navigate('/' + Routes.FIGHTER_VIEW)
+    }
+  }
 
   useEffect(() => {
     getImages().then(res => setCharacters(res))

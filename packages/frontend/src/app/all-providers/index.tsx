@@ -14,4 +14,5 @@ export const combineProviders =
         return <ProviderOrWithValue>{tree}</ProviderOrWithValue>
       }
     }, children as ReactElement)
+
 export const AllProviders = combineProviders([[Router]])

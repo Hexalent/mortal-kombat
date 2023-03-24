@@ -11,7 +11,8 @@ module.exports = {
     extend: {
       fontFamily: {
         sans: ['Poppins', ...fontFamily.sans],
-        Poppins: ['Poppins', 'sans-serif']
+        Poppins: ['Poppins', 'sans-serif'],
+        russo: ['Russo One', 'sans-serif']
       }
     }
   },
