@@ -7,7 +7,7 @@ export const BasicLayout = () => {
   const location = useLocation()
 
   return (
-    <div className='mx-auto'>
+    <div className='relative mx-auto min-h-screen overflow-hidden bg-black'>
       <AnimatePresence mode='wait'>
         <motion.div
           key={location.pathname}
@@ -15,26 +15,18 @@ export const BasicLayout = () => {
           animate='animateState'
           exit='exitState'
           transition={{
-            duration: 0.75
+            duration: 0.75,
+            delay: 0.1,
+            ease: 'easeInOut'
           }}
           variants={{
             initialState: {
               opacity: 0,
-              y: 25,
-              scale: 0.9,
-              rotate: -5
+              y: 25
             },
             animateState: {
               opacity: 1,
-              y: 0,
-              scale: 1,
-              rotate: 0
-            },
-            exitState: {
-              opacity: 0,
-              y: -25,
-              scale: 0.9,
-              rotate: 5
+              y: 0
             }
           }}
         >
