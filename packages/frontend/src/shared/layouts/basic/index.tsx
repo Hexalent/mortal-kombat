@@ -1,9 +1,11 @@
 import { Suspense } from 'react'
 import { Loader } from '@/shared/ui'
-import { Outlet } from 'react-router-dom'
+import { Outlet, useLocation } from 'react-router-dom'
 import { AnimatePresence, motion } from 'framer-motion'
 
 export const BasicLayout = () => {
+  const location = useLocation()
+
   return (
     <div className='container mx-auto px-4'>
       <AnimatePresence mode='popLayout'>
@@ -28,7 +30,6 @@ export const BasicLayout = () => {
               clipPath: 'polygon(50% 0, 50% 0, 50% 100%, 50% 100%)'
             }
           }}
-          className='base-page-size'
         >
           <Suspense fallback={<Loader />}>
             <Outlet />

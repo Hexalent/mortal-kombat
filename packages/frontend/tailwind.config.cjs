@@ -12,6 +12,9 @@ module.exports = {
       fontFamily: {
         sans: ['Poppins', ...fontFamily.sans],
         Poppins: ['Poppins', 'sans-serif']
+      },
+      backgroundImage: {
+        'start-game-bg': "url('/public/background/start-game.jpg')",
       }
     }
   },
@@ -24,23 +27,5 @@ module.exports = {
     require('@tailwindcss/typography'),
     require('@tailwindcss/aspect-ratio'),
     require('@tailwindcss/container-queries')
-  ],
-  daisyui: {
-    themes: [
-      {
-        mytheme: {
-          primary: '#4198fd',
-          secondary: '#D926AA',
-          accent: '#1FB2A5',
-          neutral: '#191D24',
-          'base-100': '#000000',
-          'base-200': '#0e0e0e',
-          info: '#3ABFF8',
-          success: '#36D399',
-          warning: '#FBBD23',
-          error: '#F87272'
-        }
-      }
-    ]
-  }
+  ]
 }
