@@ -8,7 +8,7 @@ export const BasicLayout = () => {
 
   return (
     <div className='mx-auto'>
-      <AnimatePresence mode='wait'>
+      <AnimatePresence mode='popLayout'>
         <motion.div
           key={location.pathname}
           initial='initialState'
