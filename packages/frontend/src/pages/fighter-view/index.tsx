@@ -1,9 +1,9 @@
 import { MotionPage } from '@/shared/ui'
-import { useHeroes } from '@/entities'
+import { heroesSelectors } from '@/entities'
 import { motion } from 'framer-motion'
 
 export const FighterView = () => {
-  const [firstPlayer, secondPlayer] = useHeroes(state => [state.firstPlayer, state.secondPlayer])
+  const selectedHeroes = heroesSelectors.use.selectedHeroes()
   return (
     <MotionPage>
       <div className='h-screen w-screen'>
@@ -12,30 +12,21 @@ export const FighterView = () => {
           <div className='absolute top-[50px] right-1/2 translate-x-1/2 font-russo text-8xl font-bold text-white'>
             Battle 1
           </div>
-          <motion.div
-            initial={{ x: -200, opacity: 0 }}
-            animate={{ x: 0, opacity: 1 }}
-            transition={{
-              duration: 0.7,
-              delay: 0.8
-            }}
-          >
-            <div key={firstPlayer?.number}>
-              <img src={firstPlayer?.img} alt='img' className='max-h-[600px] transition hover:scale-110' />
-            </div>
-          </motion.div>
-          <motion.div
-            initial={{ x: 200, opacity: 0 }}
-            animate={{ x: 0, opacity: 1 }}
-            transition={{
-              duration: 0.7,
-              delay: 1
-            }}
-          >
-            <div key={secondPlayer?.number}>
-              <img src={secondPlayer?.img} alt='img' className='max-h-[600px] transition hover:scale-110' />
-            </div>
-          </motion.div>
+          {selectedHeroes.map((hero, index) => (
+            <motion.div
+              key={hero.number}
+              initial={{ x: index === 0 ? -200 : 200, opacity: 0 }}
+              animate={{ x: 0, opacity: 1 }}
+              transition={{
+                duration: 0.7,
+                delay: index === 0 ? 0.8 : 1
+              }}
+            >
+              <div key={hero.number}>
+                <img src={hero.img} alt='img' className='max-h-[600px] transition hover:scale-110' />
+              </div>
+            </motion.div>
+          ))}
         </div>
       </div>
     </MotionPage>

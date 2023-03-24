@@ -1,6 +1,7 @@
 import { create } from 'zustand'
+import { createSelectorFunctions } from '@/shared/lib/selectors'
 
-type Player = {
+type Hero = {
   title: string
   img: string
   gif: string
@@ -8,19 +9,29 @@ type Player = {
 }
 
 interface HeroesStore {
-  firstPlayer: Player | null
-  secondPlayer: Player | null
-  setFirstPlayer: (player: Player) => void
-  setSecondPlayer: (player: Player) => void
+  selectedHeroes: Hero[]
+  activeHero: Hero | null
+  selectHero: (selectedHero: Hero) => void
+  setActiveHero: (activeHero: Hero | null) => void
 }
 
-export const useHeroes = create<HeroesStore>(set => ({
-  firstPlayer: null,
-  secondPlayer: null,
-  setFirstPlayer: (firstPlayer: Player) => {
-    set({ firstPlayer })
+export const useHeroesStore = create<HeroesStore>(set => ({
+  selectedHeroes: [],
+  activeHero: null,
+  selectHero: (selectedHero: Hero) => {
+    set(state => {
+      const selectedHeroes = state.selectedHeroes.filter(hero => hero.number !== selectedHero.number)
+      const updatedSelectedHeroes =
+        selectedHero.number === state.activeHero?.number
+          ? [selectedHero, ...selectedHeroes]
+          : [...selectedHeroes, selectedHero]
+      const updatedActiveHero = updatedSelectedHeroes[0] ?? null
+      return { selectedHeroes: updatedSelectedHeroes, activeHero: updatedActiveHero }
+    })
   },
-  setSecondPlayer: (secondPlayer: Player) => {
-    set({ secondPlayer })
+  setActiveHero: (activeHero: Hero | null) => {
+    set({ activeHero })
   }
 }))
+
+export const heroesSelectors = createSelectorFunctions(useHeroesStore)
