@@ -1,5 +1,6 @@
 import { memo } from 'react'
 import { Character } from '@/shared/lib/images'
+import { ImageWithFallback } from '@/shared/ui'
 
 type HeroImageProps = { hero: Character; isActive: boolean; isSelected: boolean }
 
@@ -12,10 +13,10 @@ export const HeroImage = memo(({ hero, isActive, isSelected }: HeroImageProps) =
 
   return (
     <div className='flex items-end justify-end'>
-      <img
+      <ImageWithFallback
         src={hero.img}
         alt={`Hero ${hero.title}`}
-        className={`object-fit relative h-[200px] w-full bg-stone-800 shadow-sm ${borderClass}`}
+        className={`object-fit relative bg-stone-800 shadow-sm ${borderClass}`}
       />
     </div>
   )
