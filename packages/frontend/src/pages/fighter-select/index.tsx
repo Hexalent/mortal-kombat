@@ -1,3 +1,5 @@
+import { MotionPage } from '@/shared/ui'
+
 export const FighterSelect = () => {
-  return <div>FighterSelect</div>
+  return <MotionPage>FighterSelect</MotionPage>
 }

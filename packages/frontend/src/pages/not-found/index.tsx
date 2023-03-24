@@ -1,4 +1,5 @@
 import { useNavigate } from 'react-router-dom'
+import { MotionPage } from '@/shared/ui'
 
 export const NotFound = () => {
   const navigate = useNavigate()
@@ -8,7 +9,7 @@ export const NotFound = () => {
   }
 
   return (
-    <div className='flex h-screen flex-col items-center justify-center'>
+    <MotionPage className='flex h-screen flex-col items-center justify-center'>
       <h1 className='text-3xl font-bold'>404</h1>
       <p className='text-xl'>Page not found</p>
       <div className='mt-5 flex items-center justify-center gap-x-6' onClick={handleBackToLogin}>
@@ -16,6 +17,6 @@ export const NotFound = () => {
           Back game <span aria-hidden='true'>→</span>
         </span>
       </div>
-    </div>
+    </MotionPage>
   )
 }
