@@ -16,7 +16,7 @@ export const HeroImage = memo(({ hero, isActive, isSelected }: HeroImageProps) =
       <ImageWithFallback
         src={hero.img}
         alt={`Hero ${hero.title}`}
-        className={`object-fit relative bg-stone-800 shadow-sm ${borderClass}`}
+        className={`relative bg-stone-800 object-contain shadow-sm ${borderClass}`}
       />
     </div>
   )

@@ -12,6 +12,7 @@ type Hero = {
 
 interface HeroesStore {
   selectedHeroes: Hero[]
+  unselectLastHero: () => void
   characters: Character[]
   activeHero: Hero | null
   setCharacters: (characters: Character[]) => void
@@ -19,27 +20,28 @@ interface HeroesStore {
   setActiveHero: (activeHero: Hero | null) => void
 }
 
-const useHeroesStore = create<HeroesStore>(set => ({
+const updateSelectedHeroes = (selectedHero: Hero, state: HeroesStore) => {
+  const numSelectedHeroes = state.selectedHeroes.length
+  if (numSelectedHeroes < 2) {
+    const filteredHeroes = state.selectedHeroes.filter(hero => hero.number !== selectedHero.number)
+    const updatedHeroes =
+      selectedHero.number === state.activeHero?.number
+        ? [selectedHero, ...filteredHeroes]
+        : [...filteredHeroes, selectedHero]
+    const updatedActiveHero = updatedHeroes[0] ?? null
+    return { selectedHeroes: updatedHeroes, activeHero: updatedActiveHero }
+  }
+  return state
+}
+
+const useHeroesStore = create<HeroesStore>((set, get) => ({
   characters: [],
   selectedHeroes: [],
   activeHero: null,
   setCharacters: characters => set({ characters }),
-  selectHero: selectedHero => {
-    set(state => {
-      const numSelectedHeroes = state.selectedHeroes.length
-      if (numSelectedHeroes < 2) {
-        const filteredHeroes = state.selectedHeroes.filter(hero => hero.number !== selectedHero.number)
-        const updatedHeroes =
-          selectedHero.number === state.activeHero?.number
-            ? [selectedHero, ...filteredHeroes]
-            : [...filteredHeroes, selectedHero]
-        const updatedActiveHero = updatedHeroes[0] ?? null
-        return { selectedHeroes: updatedHeroes, activeHero: updatedActiveHero }
-      }
-      return state
-    })
-  },
-  setActiveHero: activeHero => set({ activeHero })
+  selectHero: selectedHero => set(state => updateSelectedHeroes(selectedHero, state)),
+  setActiveHero: activeHero => set({ activeHero }),
+  unselectLastHero: () => set({ selectedHeroes: get().selectedHeroes.slice(0, -1) })
 }))
 
 if (process.env.NODE_ENV === 'development') {

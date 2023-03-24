@@ -8,6 +8,7 @@ export const useKeyboardEvents = () => {
   const characters = heroesSelectors.use.characters()
   const selectHero = heroesSelectors.use.selectHero()
   const selectedHeroes = heroesSelectors.use.selectedHeroes()
+  const unselectLastHero = heroesSelectors.use.unselectLastHero()
 
   const handleKeyDown = useCallback(
     (event: KeyboardEvent) => {
@@ -18,9 +19,11 @@ export const useKeyboardEvents = () => {
       if (nextActiveHero || (code === 'Enter' && activeHero)) {
         setActiveHero(nextActiveHero ?? selectedHeroes[0] ?? characters[0])
         if (code === 'Enter' && activeHero) selectHero(activeHero as Character)
+      } else if (code === 'Escape') {
+        unselectLastHero()
       }
     },
-    [activeHero, characters, selectHero, selectedHeroes, setActiveHero]
+    [activeHero, characters, selectHero, selectedHeroes, setActiveHero, unselectLastHero] // Add unselectLastHero to the dependency array
   )
 
   useEffect(() => {
