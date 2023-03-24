@@ -13,37 +13,39 @@ type Hero = {
 interface HeroesStore {
   selectedHeroes: Hero[]
   characters: Character[]
-  setCharacters: (characters: Character[]) => void
   activeHero: Hero | null
+  setCharacters: (characters: Character[]) => void
   selectHero: (selectedHero: Hero) => void
   setActiveHero: (activeHero: Hero | null) => void
 }
 
-export const useHeroesStore = create<HeroesStore>(set => ({
+const useHeroesStore = create<HeroesStore>(set => ({
   characters: [],
   selectedHeroes: [],
   activeHero: null,
-  selectHero: (selectedHero: Hero) => {
+  setCharacters: characters => set({ characters }),
+  selectHero: selectedHero => {
     set(state => {
-      const selectedHeroes = state.selectedHeroes.filter(hero => hero.number !== selectedHero.number)
-      const updatedSelectedHeroes =
-        selectedHero.number === state.activeHero?.number
-          ? [selectedHero, ...selectedHeroes]
-          : [...selectedHeroes, selectedHero]
-      const updatedActiveHero = updatedSelectedHeroes[0] ?? null
-      return { selectedHeroes: updatedSelectedHeroes, activeHero: updatedActiveHero }
+      const numSelectedHeroes = state.selectedHeroes.length
+      if (numSelectedHeroes < 2) {
+        const filteredHeroes = state.selectedHeroes.filter(hero => hero.number !== selectedHero.number)
+        const updatedHeroes =
+          selectedHero.number === state.activeHero?.number
+            ? [selectedHero, ...filteredHeroes]
+            : [...filteredHeroes, selectedHero]
+        const updatedActiveHero = updatedHeroes[0] ?? null
+        return { selectedHeroes: updatedHeroes, activeHero: updatedActiveHero }
+      }
+      return state
     })
   },
-  setCharacters: (characters: Character[]) => {
-    set({ characters })
-  },
-  setActiveHero: (activeHero: Hero | null) => {
-    set({ activeHero })
-  }
+  setActiveHero: activeHero => set({ activeHero })
 }))
 
 if (process.env.NODE_ENV === 'development') {
   mountStoreDevtool('useHeroesStore', useHeroesStore)
 }
 
-export const heroesSelectors = createSelectorFunctions(useHeroesStore)
+const heroesSelectors = createSelectorFunctions(useHeroesStore)
+
+export { useHeroesStore, heroesSelectors }

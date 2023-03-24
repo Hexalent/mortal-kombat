@@ -7,9 +7,9 @@ export const useCharacterSelection = () => {
   const setCharacters = heroesSelectors.use.setCharacters()
 
   useEffect(() => {
-    getCharacters().then(res => {
-      setCharacters(res)
-      setActiveHero(res[0])
+    getCharacters().then(characters => {
+      setCharacters(characters)
+      setActiveHero(characters[0])
     })
   }, [setActiveHero, setCharacters])
 }

@@ -11,39 +11,16 @@ export const useKeyboardEvents = () => {
 
   const handleKeyDown = useCallback(
     (event: KeyboardEvent) => {
-      console.log('key', event.code)
-      switch (event.code) {
-        case 'ArrowUp': {
-          const newActiveHero = characters.find(hero => hero.number === (activeHero as Character)?.number + 10)
-          if (newActiveHero) setActiveHero(newActiveHero)
-          break
-        }
-        case 'ArrowDown': {
-          const newActiveHero = characters.find(hero => hero.number === (activeHero as Character)?.number - 10)
-          if (newActiveHero) setActiveHero(newActiveHero)
-          break
-        }
-        case 'ArrowLeft': {
-          const newActiveHero = characters.find(hero => hero.number === (activeHero as Character)?.number - 1)
-          if (newActiveHero) setActiveHero(newActiveHero)
-          break
-        }
-        case 'ArrowRight': {
-          const newActiveHero = characters.find(hero => hero.number === (activeHero as Character)?.number + 1)
-          if (newActiveHero) setActiveHero(newActiveHero)
-          break
-        }
+      const { code } = event
+      const activeHeroNum = activeHero?.number ?? 0
+      const nextActiveHero = characters.find(hero => hero.number === activeHeroNum + KEY_DIRECTION_MAP[code])
 
-        case 'Enter':
-          selectHero(activeHero as Character)
-          setActiveHero(selectedHeroes.length === 0 ? characters[0] : characters[1])
-          break
-
-        default:
-          break
+      if (nextActiveHero || (code === 'Enter' && activeHero)) {
+        setActiveHero(nextActiveHero ?? selectedHeroes[0] ?? characters[0])
+        if (code === 'Enter' && activeHero) selectHero(activeHero as Character)
       }
     },
-    [activeHero, characters, selectHero, selectedHeroes.length, setActiveHero]
+    [activeHero, characters, selectHero, selectedHeroes, setActiveHero]
   )
 
   useEffect(() => {
@@ -52,4 +29,11 @@ export const useKeyboardEvents = () => {
       document.removeEventListener('keydown', handleKeyDown)
     }
   }, [handleKeyDown])
+}
+
+const KEY_DIRECTION_MAP: Record<string, number> = {
+  ArrowUp: 10,
+  ArrowDown: -10,
+  ArrowLeft: -1,
+  ArrowRight: 1
 }
