@@ -7,7 +7,7 @@ export const BasicLayout = () => {
   const location = useLocation()
 
   return (
-    <div className='container mx-auto px-4'>
+    <div className='mx-auto'>
       <AnimatePresence mode='popLayout'>
         <motion.div
           key={location.pathname}
