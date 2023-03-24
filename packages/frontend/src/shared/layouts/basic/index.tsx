@@ -1,5 +1,5 @@
 import { Suspense } from 'react'
-import { Loader } from '@/shared/ui'
+import { Audio, Loader } from '@/shared/ui'
 import { Outlet, useLocation } from 'react-router-dom'
 import { AnimatePresence, motion } from 'framer-motion'
 
@@ -30,6 +30,7 @@ export const BasicLayout = () => {
             }
           }}
         >
+          <Audio />
           <Suspense fallback={<Loader />}>
             <Outlet />
           </Suspense>
