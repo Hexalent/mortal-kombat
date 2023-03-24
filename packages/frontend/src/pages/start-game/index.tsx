@@ -1,4 +1,4 @@
-import { MotionButton, MotionPage } from '@/shared/ui'
+import { Audio, MotionButton, MotionPage } from '@/shared/ui'
 import { useNavigate } from 'react-router-dom'
 import { Routes } from '@/shared/configs'
 
@@ -10,7 +10,9 @@ export const StartGame = () => {
 
   return (
     <MotionPage className='flex h-screen min-h-screen items-center justify-center bg-[url(background/start-game.jpg)] bg-cover bg-center bg-no-repeat'>
+      <Audio />
       <MotionButton onClick={handleStartGame}>Start game</MotionButton>
+      <div className='max-h-lg max-w-lg'></div>
     </MotionPage>
   )
 }

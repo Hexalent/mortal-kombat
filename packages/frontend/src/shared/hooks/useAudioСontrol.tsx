@@ -8,12 +8,11 @@ interface AudioControlHook {
 }
 
 export const useAudioControl = (): AudioControlHook => {
-  const visualColor = '#000'
+  const visualColor = '#FFF'
   const [isPlaying, setIsPlaying] = useState<boolean>(true)
   const [visualStrokeWidth] = useState<string>('1')
-  const [visualDuration, setVisualDuration] = useState<string>('1300ms')
+  const [visualDuration, setVisualDuration] = useState<string>('0ms')
   const audioElement = useMemo<HTMLAudioElement>(() => new Audio('/audio/layer-music.mp3'), [])
-  audioElement.loop = isPlaying
 
   const toggleAudioPlayback = useCallback(async () => {
     setIsPlaying(!isPlaying)
