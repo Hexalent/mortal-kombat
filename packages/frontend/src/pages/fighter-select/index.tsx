@@ -13,12 +13,8 @@ export const FighterSelect = () => {
       <div className='flex h-screen w-screen items-center justify-center bg-[url(/public/background/bg.jpg)] bg-cover bg-center bg-no-repeat p-4'>
         <div className='grid h-full max-h-[600px] w-full max-w-[850px] grid-cols-5 grid-rows-3 items-center justify-center overflow-hidden'>
           {characters.map(character => (
-            <div className='flex items-end justify-end'>
-              <img
-                src={character.img}
-                className='object-fit relative h-[200px] w-full bg-stone-800 shadow-sm'
-                key={character.title}
-              />
+            <div className='flex items-end justify-end' key={character.title}>
+              <img src={character.img} className='object-fit relative h-[200px] w-full bg-stone-800 shadow-sm' />
             </div>
           ))}
         </div>
