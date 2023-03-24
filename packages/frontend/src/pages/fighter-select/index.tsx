@@ -1,44 +1,54 @@
 import { MotionPage } from '@/shared/ui'
 import { useEffect, useState } from 'react'
 import { getImages, TCharactersObj } from '@/shared/lib/images/getImages'
+import { useNavigate } from 'react-router-dom'
+import { Routes } from '@/shared/configs'
 
 export const FighterSelect = () => {
+  const navigate = useNavigate()
+
+  const [firstPlayer, setFirstPlayer] = useState<number | null>(null)
+  const [secondPlayer, setSecondPlayer] = useState<number | null>(null)
+
   const [characters, setCharacters] = useState<TCharactersObj[]>([])
   const [active, setActive] = useState<number>(0)
 
   const keyDownHandler = (event: KeyboardEvent) => {
     if (event.code === 'ArrowUp') {
-      if (active < 5) return
-      setActive(active - 5)
+      if (active < 5) setActive(active + 10)
+      else setActive(active - 5)
     }
 
     if (event.code === 'ArrowDown') {
-      if (active > 9) return
-      setActive(active + 5)
+      if (active > 9) setActive(active - 10)
+      else setActive(active + 5)
     }
 
     if (event.code === 'ArrowLeft') {
       if (active === 0) {
         setActive(14)
-        return
-      }
-      if (active < 1) return
-      setActive(active - 1)
+      } else setActive(active - 1)
     }
 
     if (event.code === 'ArrowRight') {
       if (active === 14) {
         setActive(0)
-        return
-      }
-      if (active > 13) return
-      setActive(active + 1)
+      } else setActive(active + 1)
+    }
+
+    if (event.code === 'Enter') {
+      if (firstPlayer === null) setFirstPlayer(active)
+      else setSecondPlayer(active)
     }
   }
 
   useEffect(() => {
     getImages().then(res => setCharacters(res))
   }, [])
+
+  useEffect(() => {
+    secondPlayer && navigate('/' + Routes.FIGHTER_VIEW)
+  }, [secondPlayer])
 
   useEffect(() => {
     document.addEventListener('keydown', keyDownHandler)
