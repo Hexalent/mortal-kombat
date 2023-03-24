@@ -8,7 +8,7 @@ export const BasicLayout = () => {
 
   return (
     <div className='mx-auto'>
-      <AnimatePresence mode='popLayout'>
+      <AnimatePresence mode='wait'>
         <motion.div
           key={location.pathname}
           initial='initialState'
@@ -20,11 +20,21 @@ export const BasicLayout = () => {
           variants={{
             initialState: {
               opacity: 0,
-              clipPath: 'polygon(50% 0, 50% 0, 50% 100%, 50% 100%)'
+              y: 25,
+              scale: 0.9,
+              rotate: -5
             },
             animateState: {
               opacity: 1,
-              clipPath: 'polygon(0 0, 100% 0, 100% 100%, 0% 100%)'
+              y: 0,
+              scale: 1,
+              rotate: 0
+            },
+            exitState: {
+              opacity: 0,
+              y: -25,
+              scale: 0.9,
+              rotate: 5
             }
           }}
         >
