@@ -7,8 +7,8 @@ export const BasicLayout = () => {
   const location = useLocation()
 
   return (
-    <div className='container mx-auto px-4'>
-      <AnimatePresence mode='popLayout'>
+    <div className='mx-auto'>
+      <AnimatePresence mode='wait'>
         <motion.div
           key={location.pathname}
           initial='initialState'
@@ -20,14 +20,11 @@ export const BasicLayout = () => {
           variants={{
             initialState: {
               opacity: 0,
-              clipPath: 'polygon(0 0, 100% 0, 100% 100%, 0% 100%)'
+              clipPath: 'polygon(50% 0, 50% 0, 50% 100%, 50% 100%)'
             },
             animateState: {
               opacity: 1,
               clipPath: 'polygon(0 0, 100% 0, 100% 100%, 0% 100%)'
-            },
-            exitState: {
-              clipPath: 'polygon(50% 0, 50% 0, 50% 100%, 50% 100%)'
             }
           }}
         >
