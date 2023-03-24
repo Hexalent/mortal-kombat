@@ -2,6 +2,7 @@ export type TCharactersObj = {
   title: string
   gif: string
   img: string
+  number: number
 }
 
 export const getImages = async () => {
@@ -19,5 +20,7 @@ export const getImages = async () => {
     else charactersObj[name].img = char
   })
 
-  return Object.values(charactersObj) as TCharactersObj[]
+  return Object.values(charactersObj).map((characterObj, idx) => {
+    return { ...(characterObj as TCharactersObj), number: idx }
+  }) as TCharactersObj[]
 }
