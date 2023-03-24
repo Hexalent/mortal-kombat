@@ -7,24 +7,26 @@ export const BasicLayout = () => {
   const location = useLocation()
 
   return (
-    <div className='mx-auto'>
-      <AnimatePresence mode='popLayout'>
+    <div className='relative mx-auto min-h-screen overflow-hidden bg-black'>
+      <AnimatePresence mode='wait'>
         <motion.div
           key={location.pathname}
           initial='initialState'
           animate='animateState'
           exit='exitState'
           transition={{
-            duration: 0.75
+            duration: 0.75,
+            delay: 0.1,
+            ease: 'easeInOut'
           }}
           variants={{
             initialState: {
               opacity: 0,
-              clipPath: 'polygon(50% 0, 50% 0, 50% 100%, 50% 100%)'
+              y: 25
             },
             animateState: {
               opacity: 1,
-              clipPath: 'polygon(0 0, 100% 0, 100% 100%, 0% 100%)'
+              y: 0
             }
           }}
         >

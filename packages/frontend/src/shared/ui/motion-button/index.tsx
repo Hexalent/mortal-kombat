@@ -4,8 +4,8 @@ import { PropsWithChildren } from 'react'
 type MotionButtonProps = PropsWithChildren<HTMLMotionProps<'button'>>
 export const MotionButton = ({ children, ...props }: MotionButtonProps) => {
   const scaleUp = {
-    hover: { scale: 1.2 },
-    tap: { scale: 0.9 }
+    hover: { scale: 1 },
+    tap: { scale: 0.75 }
   }
 
   const transition = {
