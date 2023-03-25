@@ -32,8 +32,8 @@ export default defineConfig(async () => {
     build: {
       rollupOptions: {
         input: {
-          main: 'src/main.tsx',
-          sw: 'src/sw.ts'
+          main: 'src/app/index.tsx',
+          sw: 'sw.ts'
         }
       }
     },

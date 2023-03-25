@@ -16,7 +16,7 @@ export const MotionButton = ({ children, ...props }: MotionButtonProps) => {
 
   return (
     <motion.button
-      className='mortal rounded-md px-4 py-2 text-white shadow-md transition-all duration-200 hover:border-b-2'
+      className='mortal rounded-md border-b-2 px-4 py-2 text-xl text-white shadow-md transition-all duration-300 hover:bg-white hover:text-black'
       whileHover={scaleUp.hover}
       whileTap={scaleUp.tap}
       transition={transition}
