@@ -16,13 +16,12 @@ export const useKeyboardEvents = () => {
       const activeHeroNum = activeHero?.number ?? 0
       const nextActiveHero = characters.find(hero => hero.number === activeHeroNum + KEY_DIRECTION_MAP[code])
 
-      if (nextActiveHero || (ACTIONS_MAP[code] && activeHero)) {
+      if (nextActiveHero || (code === 'Enter' && activeHero)) {
         setActiveHero(nextActiveHero ?? selectedHeroes[0] ?? characters[0])
-        if (code === ACTIONS_MAP.select && activeHero) selectHero(activeHero as Character)
-        if (code === ACTIONS_MAP.goBack) unselectLastHero()
-      }
+        if (code === ACTIONS_MAP.APPLY && activeHero) selectHero(activeHero as Character)
+      } else if (code === ACTIONS_MAP.ESCAPE) unselectLastHero()
     },
-    [activeHero, characters, selectHero, selectedHeroes, setActiveHero, unselectLastHero]
+    [activeHero, characters, selectHero, selectedHeroes, setActiveHero, unselectLastHero] // Add unselectLastHero to the dependency array
   )
 
   useEffect(() => {
@@ -41,6 +40,6 @@ const KEY_DIRECTION_MAP: Record<string, number> = {
 }
 
 const ACTIONS_MAP: Record<string, string> = {
-  KeyE: 'select',
-  KeyQ: 'goBack'
+  APPLY: 'Enter',
+  ESCAPE: 'Escape'
 }
