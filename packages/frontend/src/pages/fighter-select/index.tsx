@@ -1,6 +1,6 @@
 import { useCharacterSelection, useKeyboardEvents } from '@/shared/hooks'
 import { HeroImage } from '@/shared/ui/hero-image'
-import { MotionPage } from '@/shared/ui'
+import { Audio, MotionPage } from '@/shared/ui'
 import { useNavigate } from 'react-router-dom'
 import { heroesSelectors } from '@/entities'
 import { Routes } from '@/shared/configs'
@@ -24,6 +24,7 @@ export const FighterSelect = () => {
 
   return (
     <MotionPage>
+      <Audio />
       <div className='flex h-screen w-screen items-center justify-center bg-[url(/public/background/bg.jpg)] bg-cover bg-center bg-no-repeat p-4'>
         <div className='relative grid h-full max-h-[600px] w-full max-w-[850px] grid-cols-5 grid-rows-3 items-center justify-center overflow-hidden'>
           {characters.map(hero => (
