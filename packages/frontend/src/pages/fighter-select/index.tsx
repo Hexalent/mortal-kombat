@@ -36,23 +36,33 @@ export const FighterSelect = () => {
           ))}
         </div>
         {
-          <div className='absolute bottom-1 left-10'>
-            <img
-              src={selectedHeroes[0] ? selectedHeroes[0].gif : activeHero?.gif}
-              alt='Hero gif'
-              className='object-fit h-[300px]'
-            />
-          </div>
+          <>
+            <div className='absolute bottom-10 left-10'>
+              <img
+                src={selectedHeroes[0] ? selectedHeroes[0].gif : activeHero?.gif}
+                alt='Hero gif'
+                className='object-fit h-[300px]'
+              />
+            </div>
+            <div className='absolute bottom-2 left-20 font-russo text-xl font-bold text-white'>
+              {selectedHeroes[0] ? selectedHeroes[0].title.replace('_', ' ') : activeHero?.title.replace('_', ' ')}
+            </div>
+          </>
         }
         {selectedHeroes[0] && (
-          <div className={'absolute bottom-1 right-10'}>
-            <img
-              src={selectedHeroes[1] ? selectedHeroes[1].gif : activeHero?.gif}
-              alt='Hero gif'
-              className='object-fit h-[300px]'
-              style={{ transform: 'scaleX(-1)' }}
-            />
-          </div>
+          <>
+            <div className={'absolute bottom-10 right-10'}>
+              <img
+                src={selectedHeroes[1] ? selectedHeroes[1].gif : activeHero?.gif}
+                alt='Hero gif'
+                className='object-fit h-[300px]'
+                style={{ transform: 'scaleX(-1)' }}
+              />
+            </div>
+            <div className='absolute bottom-2 right-20 font-russo text-xl font-bold text-white'>
+              {selectedHeroes[1] ? selectedHeroes[1].title.replace('_', ' ') : activeHero?.title.replace('_', ' ')}
+            </div>
+          </>
         )}
         {isHeroSelected && (
           <button
