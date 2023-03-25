@@ -1,15 +1,17 @@
 import { useCharacterSelection, useKeyboardEvents } from '@/shared/hooks'
 import { HeroImage } from '@/shared/ui/hero-image'
-import { Audio, MotionPage } from '@/shared/ui'
+import { Audio, GoBackButton, MotionPage } from '@/shared/ui'
 import { useNavigate } from 'react-router-dom'
 import { heroesSelectors } from '@/entities'
 import { Routes } from '@/shared/configs'
+import { SettingsHint, settingsSelectors } from '@/entities/settings'
 
 export const FighterSelect = () => {
   const navigate = useNavigate()
   const activeHero = heroesSelectors.use.activeHero()
   const characters = heroesSelectors.use.characters()
   const selectedHeroes = heroesSelectors.use.selectedHeroes()
+  const isDetailsEnabled = settingsSelectors.use.isDetailsEnabled()
 
   useCharacterSelection()
   useKeyboardEvents()
@@ -24,8 +26,10 @@ export const FighterSelect = () => {
 
   return (
     <MotionPage>
-      <Audio />
-      <div className='flex h-screen w-screen items-center justify-center bg-[url(/public/background/bg.jpg)] bg-cover bg-center bg-no-repeat p-4'>
+      <div className='relative flex h-screen w-screen items-center justify-center bg-[url(/public/background/bg.jpg)] bg-cover bg-center bg-no-repeat p-4'>
+        <GoBackButton />
+        <Audio />
+        {isDetailsEnabled ? <SettingsHint /> : null}
         <div className='relative grid h-full max-h-[600px] w-full max-w-[850px] grid-cols-5 grid-rows-3 items-center justify-center overflow-hidden'>
           {characters.map(hero => (
             <HeroImage

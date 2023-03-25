@@ -13,7 +13,6 @@ export const BasicLayout = () => {
           key={location.pathname}
           initial='initialState'
           animate='animateState'
-          exit='exitState'
           transition={{
             duration: 0.75,
             delay: 0.1,

@@ -4,7 +4,7 @@ export const Audio = () => {
   const { visualColor, visualStrokeWidth, visualDuration, togglePlayback } = useAudioPlayer()
 
   return (
-    <div onClick={togglePlayback} className='absolute bottom-2 right-5 cursor-pointer'>
+    <div onClick={togglePlayback} className='absolute top-5 right-5 z-10 cursor-pointer'>
       <svg viewBox='0 0 24 24' stroke={visualColor} strokeWidth={visualStrokeWidth} className='w-30 h-10'>
         <path d='M4 10 L 4 14 Z'>
           <animate

@@ -13,7 +13,7 @@ export const Heading = ({ children, level = 'h1', className = '' }: HeadingProps
   const defaultClasses = [
     'font-mortal',
     'text-red-600',
-    'text-4xl',
+    'text-7xl',
     'leading-none',
     'tracking-tight',
     'uppercase',
