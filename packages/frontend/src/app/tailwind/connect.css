@@ -4,7 +4,5 @@
 
 @font-face {
   font-family: 'MortalKombat';
-  src: url('./fonts/MortalKombat.ttf') format('truetype');
-  font-weight: normal;
-  font-style: normal;
+  src: url('/fonts/MortalKombat.ttf') format('truetype');
 }

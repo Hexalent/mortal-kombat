@@ -1,5 +1,6 @@
 import { useCharacterSelection, useKeyboardEvents } from '@/shared/hooks'
-import { HeroImage, MotionPage } from '@/shared/ui'
+import { HeroImage } from '@/shared/ui/hero-image'
+import { MotionPage } from '@/shared/ui'
 import { useNavigate } from 'react-router-dom'
 import { heroesSelectors } from '@/entities'
 import { Routes } from '@/shared/configs'
