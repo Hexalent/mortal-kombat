@@ -16,6 +16,8 @@
     "depcruise:archi": "npx depcruise --version && depcruise --config .dependency-cruiser.cjs --output-type archi src | dot -T svg | depcruise-wrap-stream-in-html > depcruise-graph.html"
   },
   "dependencies": {
+    "clsx": "^1.2.1",
+    "cssnano": "^5.1.15",
     "framer-motion": "^10.8.5",
     "lerna": "^6.4.1",
     "nx": "^15.6.3",
