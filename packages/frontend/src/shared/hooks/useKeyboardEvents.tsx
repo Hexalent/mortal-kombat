@@ -15,7 +15,6 @@ export const useKeyboardEvents = () => {
       const { code } = event
       const activeHeroNum = activeHero?.number ?? 0
       const nextActiveHero = characters.find(hero => hero.number === activeHeroNum + KEY_DIRECTION_MAP[code])
-
       if (nextActiveHero || (code === 'Enter' && activeHero)) {
         setActiveHero(nextActiveHero ?? selectedHeroes[0] ?? characters[0])
         if (code === 'Enter' && activeHero) selectHero(activeHero as Character)
@@ -23,7 +22,7 @@ export const useKeyboardEvents = () => {
         unselectLastHero()
       }
     },
-    [activeHero, characters, selectHero, selectedHeroes, setActiveHero, unselectLastHero] // Add unselectLastHero to the dependency array
+    [activeHero, characters, selectHero, selectedHeroes, setActiveHero, unselectLastHero]
   )
 
   useEffect(() => {
@@ -35,8 +34,8 @@ export const useKeyboardEvents = () => {
 }
 
 const KEY_DIRECTION_MAP: Record<string, number> = {
-  ArrowUp: 10,
-  ArrowDown: -10,
+  ArrowUp: -5,
+  ArrowDown: 5,
   ArrowLeft: -1,
   ArrowRight: 1
 }
