@@ -30,10 +30,10 @@ export const BasicLayout = () => {
             }
           }}
         >
-          <Audio />
           <Suspense fallback={<Loader />}>
             <Outlet />
           </Suspense>
+          <Audio />
         </motion.div>
       </AnimatePresence>
     </div>
