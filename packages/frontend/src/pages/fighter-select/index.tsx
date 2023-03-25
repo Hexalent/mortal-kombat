@@ -6,9 +6,9 @@ import { Routes } from '@/shared/configs'
 
 export const FighterSelect = () => {
   const navigate = useNavigate()
+  const activeHero = heroesSelectors.use.activeHero()
   const characters = heroesSelectors.use.characters()
   const selectedHeroes = heroesSelectors.use.selectedHeroes()
-  const activeHero = heroesSelectors.use.activeHero()
 
   useCharacterSelection()
   useKeyboardEvents()
@@ -34,15 +34,19 @@ export const FighterSelect = () => {
             />
           ))}
         </div>
-        {selectedHeroes.length >= 1 && (
+        {
           <div className='absolute bottom-1 left-10'>
-            <img src={selectedHeroes[0].gif} alt='Hero gif' className='object-fit h-[300px]' />
+            <img
+              src={selectedHeroes[0] ? selectedHeroes[0].gif : activeHero?.gif}
+              alt='Hero gif'
+              className='object-fit h-[300px]'
+            />
           </div>
-        )}
-        {isHeroSelected && (
+        }
+        {selectedHeroes[0] && (
           <div className={'absolute bottom-1 right-10'}>
             <img
-              src={selectedHeroes[1].gif}
+              src={selectedHeroes[1] ? selectedHeroes[1].gif : activeHero?.gif}
               alt='Hero gif'
               className='object-fit h-[300px]'
               style={{ transform: 'scaleX(-1)' }}
