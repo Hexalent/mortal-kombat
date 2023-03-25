@@ -15,11 +15,11 @@ export const useKeyboardEvents = () => {
       const { code } = event
       const activeHeroNum = activeHero?.number ?? 0
       const nextActiveHero = characters.find(hero => hero.number === activeHeroNum + KEY_DIRECTION_MAP[code])
-      if (nextActiveHero || (code === 'Enter' && activeHero)) {
+
+      if (nextActiveHero || (ACTIONS_MAP[code] && activeHero)) {
         setActiveHero(nextActiveHero ?? selectedHeroes[0] ?? characters[0])
-        if (code === 'Enter' && activeHero) selectHero(activeHero as Character)
-      } else if (code === 'Escape') {
-        unselectLastHero()
+        if (code === ACTIONS_MAP.select && activeHero) selectHero(activeHero as Character)
+        if (code === ACTIONS_MAP.goBack) unselectLastHero()
       }
     },
     [activeHero, characters, selectHero, selectedHeroes, setActiveHero, unselectLastHero]
@@ -38,4 +38,9 @@ const KEY_DIRECTION_MAP: Record<string, number> = {
   ArrowDown: 5,
   ArrowLeft: -1,
   ArrowRight: 1
+}
+
+const ACTIONS_MAP: Record<string, string> = {
+  KeyE: 'select',
+  KeyQ: 'goBack'
 }
