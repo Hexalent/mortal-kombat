@@ -16,10 +16,11 @@ export const MotionButton = ({ children, ...props }: MotionButtonProps) => {
 
   return (
     <motion.button
-      className='rounded-md bg-blue-500 px-4 py-2 text-white transition-all duration-200 hover:bg-blue-700'
+      className='mortal rounded-md px-4 py-2 text-white shadow-md transition-all duration-200 hover:border-b-2'
       whileHover={scaleUp.hover}
       whileTap={scaleUp.tap}
       transition={transition}
+      style={{ fontFamily: 'MortalKombat' }}
       {...props}
     >
       {children}
