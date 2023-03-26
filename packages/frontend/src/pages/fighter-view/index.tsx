@@ -3,8 +3,12 @@ import { heroesSelectors } from '@/entities'
 import { motion } from 'framer-motion'
 import { StageImage } from '@/shared/ui/stage-image'
 import { useStageSelection } from '@/shared/hooks/useStageSelection'
+import { Routes } from '@/shared/configs'
+import { useNavigate } from 'react-router-dom'
 
 export const FighterView = () => {
+  const navigate = useNavigate()
+
   const selectedHeroes = heroesSelectors.use.selectedHeroes()
   const selectedStage = heroesSelectors.use.selectedStage()
   const activeStage = heroesSelectors.use.activeStage()
@@ -12,17 +16,15 @@ export const FighterView = () => {
 
   useStageSelection()
 
-  const startFight = () => console.log('START')
-
-  console.log(activeStage?.img)
+  const startFight = () => navigate(`/${Routes.BATTLE_VIEW}`)
 
   return (
     <MotionPage>
       <div className='relative h-screen w-screen'>
         <div
-          className={`absolute -z-0 h-full w-full blur-sm`}
+          className={`absolute -z-0 h-full w-full bg-cover bg-center bg-no-repeat blur-sm`}
           style={{
-            background: `url(${activeStage?.img})`,
+            backgroundImage: `url(${activeStage?.img})`,
             backgroundRepeat: 'no-repeat',
             backgroundSize: 'cover',
             backgroundPosition: 'center'
