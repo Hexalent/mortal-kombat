@@ -7,6 +7,28 @@ import { heroesSelectors } from '@/entities'
 import { Routes } from '@/shared/configs'
 import { Character } from '@/shared/lib/images'
 
+type HeroGif = {
+  hero: Character
+  position: string
+}
+const HeroGif = ({ hero, position }: HeroGif) => {
+  const heroTitle = hero?.title.replace('_', ' ')
+
+  return (
+    <>
+      <div className={`absolute bottom-10 ${position}-10`}>
+        <img
+          src={hero?.gif}
+          alt='Hero gif'
+          className='object-fit h-[300px]'
+          style={position === 'right' ? { transform: 'scaleX(-1)' } : {}}
+        />
+      </div>
+      <div className={`absolute bottom-2 ${position}-20 font-russo text-xl font-bold text-white`}>{heroTitle}</div>
+    </>
+  )
+}
+
 export const FighterSelect = () => {
   const navigate = useNavigate()
   const { playAudio } = useAudio()
@@ -27,22 +49,6 @@ export const FighterSelect = () => {
 
   const isHeroSelected = selectedHeroes.length === 2
 
-  const renderHeroDetails = (hero: Character, position: string) => (
-    <>
-      <div className={`absolute bottom-10 ${position}-10`}>
-        <img
-          src={hero?.gif}
-          alt='Hero gif'
-          className='object-fit h-[300px]'
-          style={position === 'right' ? { transform: 'scaleX(-1)' } : undefined}
-        />
-      </div>
-      <div className={`absolute bottom-2 ${position}-20 font-immortal text-xl font-bold text-white`}>
-        {hero?.title.replace('_', ' ')}
-      </div>
-    </>
-  )
-
   return (
     <MotionPage>
       <div className='relative flex h-screen w-screen items-center justify-center bg-[url(/public/background/bg.jpg)] bg-cover bg-center bg-no-repeat p-4'>
@@ -57,8 +63,8 @@ export const FighterSelect = () => {
             />
           ))}
         </div>
-        {renderHeroDetails(selectedHeroes[0] || activeHero, 'left')}
-        {selectedHeroes[0] && renderHeroDetails(selectedHeroes[1] || activeHero, 'right')}
+        <HeroGif hero={selectedHeroes[0] || activeHero} position='left' />
+        {selectedHeroes[0] && <HeroGif hero={selectedHeroes[1] || activeHero} position='right' />}
         {isHeroSelected && (
           <button
             onClick={startFight}

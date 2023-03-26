@@ -5,6 +5,7 @@ import { ImageWithFallback } from '@/shared/ui'
 type StageImageProps = { stage: Stage; isActive: boolean; isSelected: boolean }
 
 export const StageImage = memo(({ stage, isActive, isSelected }: StageImageProps) => {
+  // TODO fix border height
   const borderClass = isSelected
     ? `border-4 border-solid border-${isActive ? 'white' : 'green'}-600`
     : isActive
