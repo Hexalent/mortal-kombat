@@ -24,6 +24,7 @@ interface HeroesStore {
   selectStage: (selectedStage: Stage) => void
   setActiveHero: (activeHero: Hero | null) => void
   setActiveStage: (activeStage: Stage | null) => void
+  resetGame: () => void
 }
 
 const updateSelectedHeroes = (selectedHero: Hero, state: HeroesStore) => {
@@ -54,7 +55,12 @@ const useHeroesStore = create<HeroesStore>((set, get) => ({
   setActiveHero: activeHero => set({ activeHero }),
   setActiveStage: activeStage => set({ activeStage }),
   unselectLastHero: () => set({ selectedHeroes: get().selectedHeroes.slice(0, -1) }),
-  unselectStage: () => set({ selectedStage: null })
+  unselectStage: () => set({ selectedStage: null }),
+  resetGame: () =>
+    set({
+      selectedHeroes: [],
+      selectedStage: null
+    })
 }))
 
 const heroesSelectors = createSelectorFunctions(useHeroesStore)

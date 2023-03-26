@@ -1,10 +1,25 @@
 import { MotionPage } from '@/shared/ui'
 import { Heading } from '@/shared/ui/heading'
 import { useNavigate } from 'react-router-dom'
+import { settingsSelectors } from '@/entities/settings'
+import { useAudio } from '@/shared/hooks'
+import { heroesSelectors } from '@/entities'
 
 export const Battle = () => {
   const navigate = useNavigate()
-  const newGame = () => navigate('/')
+  const isSoundTrackEnabled = settingsSelectors.use.isSoundTrackEnabled()
+  const resetGame = heroesSelectors.use.resetGame()
+  const { playAudio } = useAudio()
+
+  const newGame = () => {
+    if (isSoundTrackEnabled) {
+      playAudio(() => {
+        navigate(`/`)
+      })
+    } else navigate(`/`)
+    resetGame()
+  }
+
   return (
     <MotionPage className='relative flex h-screen min-h-screen flex-col items-center justify-center bg-[url(/public/background/bg.jpg)] bg-cover bg-center bg-no-repeat'>
       <Heading className='absolute top-60'>BATTLE</Heading>
