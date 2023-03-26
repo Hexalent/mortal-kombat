@@ -1,9 +1,16 @@
 import { useNavigate } from 'react-router-dom'
+import { settingsSelectors } from '@/entities/settings'
+import { useAudio } from '@/shared/hooks'
 
 export const GoBackButton = () => {
   const navigate = useNavigate()
+  const isSoundTrackEnabled = settingsSelectors.use.isSoundTrackEnabled()
+  const { playAudio } = useAudio()
 
   const handleGoBack = () => {
+    if (isSoundTrackEnabled) {
+      playAudio(() => navigate(-1))
+    }
     navigate(-1)
   }
 

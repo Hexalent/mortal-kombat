@@ -1,12 +1,19 @@
 import { MotionButton, MotionPage } from '@/shared/ui'
-import { SettingsButton } from '@/entities/settings'
+import { SettingsButton, settingsSelectors } from '@/entities/settings'
 import { useNavigate } from 'react-router-dom'
 import { Routes } from '@/shared/configs'
 import { Heading } from '@/shared/ui/heading'
+import { useAudio } from '@/shared/hooks'
 
 export const StartGame = () => {
   const navigate = useNavigate()
+  const isSoundTrackEnabled = settingsSelectors.use.isSoundTrackEnabled()
+  const { playAudio } = useAudio()
+
   const handleStartGame = () => {
+    if (isSoundTrackEnabled) {
+      playAudio(() => navigate(Routes.FIGHTER_SELECT))
+    }
     navigate(Routes.FIGHTER_SELECT)
   }
 

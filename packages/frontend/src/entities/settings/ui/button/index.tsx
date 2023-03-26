@@ -1,11 +1,15 @@
 import clsx from 'clsx'
 import { settingsSelectors } from '@/entities/settings'
+import { ToggleOption } from '../toggle-option'
+import { useAudio } from '@/shared/hooks'
 
 type SettingsButtonProps = {
   className?: string
 }
 
 export const SettingsButton = ({ className }: SettingsButtonProps) => {
+  const { playAudio } = useAudio()
+
   const buttonClasses = clsx(
     'font-immortal',
     'rounded-md',
@@ -24,13 +28,13 @@ export const SettingsButton = ({ className }: SettingsButtonProps) => {
   )
 
   const areDetailsEnabled = settingsSelectors.use.areDetailsEnabled()
-  const toggleDetailsVisibility = settingsSelectors.use.toggleDetailsVisibility()
   const isSoundEnabled = settingsSelectors.use.isSoundEnabled()
-  const toggleSound = settingsSelectors.use.toggleSound()
+  const isSoundTrackEnabled = settingsSelectors.use.isSoundTrackEnabled()
+  const toggleSetting = settingsSelectors.use.toggleSetting()
 
   return (
     <div className='mt-4'>
-      <label htmlFor='settings' className={buttonClasses}>
+      <label htmlFor='settings' className={buttonClasses} onClick={playAudio}>
         Settings
       </label>
 
@@ -38,28 +42,18 @@ export const SettingsButton = ({ className }: SettingsButtonProps) => {
       <div className='modal'>
         <div className='modal-box bg-[#101010]'>
           <h3 className='font-immortal text-xl text-white'>Settings</h3>
-          <div className='flex justify-between py-3'>
-            <div className='font-immortal'>Show hints and game info</div>
-            <label className='swap'>
-              <input
-                type='checkbox'
-                className='hidden'
-                checked={areDetailsEnabled}
-                onChange={toggleDetailsVisibility}
-              />
-              <div className='swap-on font-immortal'>ON</div>
-              <div className='swap-off font-immortal'>OFF</div>
-            </label>
-          </div>
-          <div className='flex justify-between py-3'>
-            <div className='font-immortal'>Music icon</div>
-            <label className='swap'>
-              <input type='checkbox' className='hidden' checked={isSoundEnabled} onChange={toggleSound} />
-              <div className='swap-on font-immortal'>ON</div>
-              <div className='swap-off font-immortal'>OFF</div>
-            </label>
-          </div>
-          <div className='modal-action'>
+          <ToggleOption
+            label='Show hints and game info'
+            isChecked={areDetailsEnabled}
+            onChange={() => toggleSetting('details')}
+          />
+          <ToggleOption label='Music icon' isChecked={isSoundEnabled} onChange={() => toggleSetting('sound')} />
+          <ToggleOption
+            label='Action soundtrack'
+            isChecked={isSoundTrackEnabled}
+            onChange={() => toggleSetting('soundtrack')}
+          />
+          <div className='modal-action' onClick={playAudio}>
             <label htmlFor='settings' className='btn-xs btn bg-none font-immortal text-sm text-white'>
               Close
             </label>

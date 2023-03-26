@@ -1,27 +1,36 @@
-import { create } from 'zustand'
+import { create as createStore } from 'zustand'
 import { createSelectorFunctions } from '@/shared/lib/selectors'
-import { immer } from 'zustand/middleware/immer'
-import { persist } from 'zustand/middleware'
+import { immer as immerMiddleware } from 'zustand/middleware/immer'
+import { persist as persistMiddleware } from 'zustand/middleware'
 
 interface SettingsStore {
   areDetailsEnabled: boolean
   isSoundEnabled: boolean
-  toggleDetailsVisibility: () => void
-  toggleSound: () => void
+  isSoundTrackEnabled: boolean
+  toggleSetting: (setting: 'details' | 'sound' | 'soundtrack') => void
 }
 
-const useSettingsStore = create(
-  persist(
-    immer<SettingsStore>(set => ({
+const useSettingsStore = createStore(
+  persistMiddleware(
+    immerMiddleware<SettingsStore>(update => ({
       areDetailsEnabled: false,
+      isSoundTrackEnabled: false,
       isSoundEnabled: true,
-      toggleDetailsVisibility: () =>
-        set(state => {
-          state.areDetailsEnabled = !state.areDetailsEnabled
-        }),
-      toggleSound: () =>
-        set(state => {
-          state.isSoundEnabled = !state.isSoundEnabled
+      toggleSetting: (setting: 'details' | 'sound' | 'soundtrack') =>
+        update(state => {
+          switch (setting) {
+            case 'details':
+              state.areDetailsEnabled = !state.areDetailsEnabled
+              break
+            case 'sound':
+              state.isSoundEnabled = !state.isSoundEnabled
+              break
+            case 'soundtrack':
+              state.isSoundTrackEnabled = !state.isSoundTrackEnabled
+              break
+            default:
+              break
+          }
         })
     })),
     { name: 'settings' }

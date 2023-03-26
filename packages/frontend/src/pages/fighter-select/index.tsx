@@ -1,4 +1,4 @@
-import { useCharacterSelection, useKeyboardEvents } from '@/shared/hooks'
+import { useAudio, useCharacterSelection, useKeyboardEvents } from '@/shared/hooks'
 import { SettingsHint, settingsSelectors } from '@/entities/settings'
 import { HeroImage } from '@/shared/ui/hero-image'
 import { MotionPage } from '@/shared/ui'
@@ -9,6 +9,7 @@ import { Character } from '@/shared/lib/images'
 
 export const FighterSelect = () => {
   const navigate = useNavigate()
+  const { playAudio } = useAudio()
   const activeHero = heroesSelectors.use.activeHero()
   const characters = heroesSelectors.use.characters()
   const selectedHeroes = heroesSelectors.use.selectedHeroes()
@@ -18,6 +19,7 @@ export const FighterSelect = () => {
   useKeyboardEvents()
 
   const startFight = () => {
+    playAudio()
     if (selectedHeroes.length === 2) {
       navigate(`/${Routes.FIGHTER_VIEW}`)
     }
