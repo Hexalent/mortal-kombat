@@ -10,7 +10,7 @@ export const GoBackButton = () => {
   return (
     <button
       onClick={handleGoBack}
-      className='btn absolute left-5 top-5 z-10 border-0 bg-transparent transition-all duration-300 hover:bg-transparent'
+      className='btn absolute left-5 top-5 z-10 border-0 bg-transparent font-immortal transition-all duration-300 hover:bg-transparent'
     >
       Back
     </button>

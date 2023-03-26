@@ -7,6 +7,7 @@ type SettingsButtonProps = {
 
 export const SettingsButton = ({ className }: SettingsButtonProps) => {
   const buttonClasses = clsx(
+    'font-immortal',
     'rounded-md',
     'border-b-2',
     'cursor-pointer',
@@ -36,9 +37,9 @@ export const SettingsButton = ({ className }: SettingsButtonProps) => {
       <input type='checkbox' id='settings' className='modal-toggle' />
       <div className='modal'>
         <div className='modal-box bg-[#101010]'>
-          <h3 className='text-xl text-white'>Settings</h3>
+          <h3 className='font-immortal text-xl text-white'>Settings</h3>
           <div className='flex justify-between py-3'>
-            <div>Show hints and game info</div>
+            <div className='font-immortal'>Show hints and game info</div>
             <label className='swap'>
               <input
                 type='checkbox'
@@ -46,20 +47,20 @@ export const SettingsButton = ({ className }: SettingsButtonProps) => {
                 checked={areDetailsEnabled}
                 onChange={toggleDetailsVisibility}
               />
-              <div className='swap-on'>ON</div>
-              <div className='swap-off'>OFF</div>
+              <div className='swap-on font-immortal'>ON</div>
+              <div className='swap-off font-immortal'>OFF</div>
             </label>
           </div>
           <div className='flex justify-between py-3'>
-            <div>Music icon</div>
+            <div className='font-immortal'>Music icon</div>
             <label className='swap'>
               <input type='checkbox' className='hidden' checked={isSoundEnabled} onChange={toggleSound} />
-              <div className='swap-on'>ON</div>
-              <div className='swap-off'>OFF</div>
+              <div className='swap-on font-immortal'>ON</div>
+              <div className='swap-off font-immortal'>OFF</div>
             </label>
           </div>
           <div className='modal-action'>
-            <label htmlFor='settings' className='btn-xs btn bg-none text-sm text-white'>
+            <label htmlFor='settings' className='btn-xs btn bg-none font-immortal text-sm text-white'>
               Close
             </label>
           </div>
