@@ -12,10 +12,22 @@ export const FighterView = () => {
 
   useStageSelection()
 
+  const startFight = () => console.log('START')
+
+  console.log(activeStage?.img)
+
   return (
     <MotionPage>
       <div className='relative h-screen w-screen'>
-        <div className='absolute -z-0 h-full w-full bg-[url(https://www.teahub.io/photos/full/171-1716638_mortal-kombat-fire-dragon-mortal-kombat.jpg)] bg-cover bg-center bg-no-repeat blur-sm' />
+        <div
+          className={`absolute -z-0 h-full w-full blur-sm`}
+          style={{
+            background: `url(${activeStage?.img})`,
+            backgroundRepeat: 'no-repeat',
+            backgroundSize: 'cover',
+            backgroundPosition: 'center'
+          }}
+        />
         <div className='relative flex h-full w-full items-end justify-between px-20'>
           <div className='absolute top-[50px] right-1/2 translate-x-1/2 font-immortal text-8xl font-bold text-white'>
             Battle
@@ -45,6 +57,14 @@ export const FighterView = () => {
               />
             ))}
           </div>
+          {selectedStage && (
+            <button
+              onClick={startFight}
+              className='absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 transform rounded border border-gray-400 bg-white py-2 px-4 font-immortal text-2xl text-gray-800 shadow hover:bg-gray-100'
+            >
+              START FIGHT
+            </button>
+          )}
         </div>
       </div>
     </MotionPage>
