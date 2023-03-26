@@ -8,11 +8,14 @@ module.exports = {
     hoverOnlyWhenSupported: true
   },
   theme: {
+
     extend: {
       fontFamily: {
         sans: ['Poppins', ...fontFamily.sans],
         Poppins: ['Poppins', 'sans-serif'],
         russo: ['Russo One', 'sans-serif'],
+        mortal: ['Mortal', 'sans-serif'],
+        immortal: ['Immortal', 'sans-serif'],
       }
     }
   },
