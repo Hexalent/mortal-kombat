@@ -1,28 +1,59 @@
 import { useCallback, useEffect } from 'react'
-import { Character } from '@/shared/lib/images'
+import { Character, Stage } from '@/shared/lib/images'
 import { heroesSelectors } from '@/entities'
 import { off, on } from '@/shared/utils'
 
 export const useKeyboardEvents = () => {
   const activeHero = heroesSelectors.use.activeHero()
+  const activeStage = heroesSelectors.use.activeStage()
+
   const setActiveHero = heroesSelectors.use.setActiveHero()
+  const setActiveStage = heroesSelectors.use.setActiveStage()
+
   const characters = heroesSelectors.use.characters()
+  const stages = heroesSelectors.use.stages()
+
   const selectHero = heroesSelectors.use.selectHero()
+  const selectStage = heroesSelectors.use.selectStage()
+
   const selectedHeroes = heroesSelectors.use.selectedHeroes()
+  const selectedStage = heroesSelectors.use.selectedStage()
+
   const unselectLastHero = heroesSelectors.use.unselectLastHero()
+  const unselectStage = heroesSelectors.use.unselectStage()
 
   const handleKeyDown = useCallback(
     (event: KeyboardEvent) => {
       const { code } = event
+
       const activeHeroNum = activeHero?.number ?? 0
       const nextActiveHero = characters.find(hero => hero.number === activeHeroNum + KEY_DIRECTION_MAP[code])
+      const nextActiveStage = stages.find(stage => stage.number === KEY_STAGE[code])
 
       if (nextActiveHero || (code === 'Enter' && activeHero)) {
         setActiveHero(nextActiveHero ?? selectedHeroes[0] ?? characters[0])
         if (code === ACTIONS_MAP.APPLY && activeHero) selectHero(activeHero as Character)
       } else if (code === ACTIONS_MAP.ESCAPE) unselectLastHero()
+
+      if (nextActiveStage || (code === 'Enter' && activeStage)) {
+        setActiveStage(nextActiveStage ?? selectedStage ?? stages[0])
+        if (code === ACTIONS_MAP.APPLY && activeStage) selectStage(activeStage as Stage)
+      } else if (code === ACTIONS_MAP.ESCAPE) unselectStage()
     },
-    [activeHero, characters, selectHero, selectedHeroes, setActiveHero, unselectLastHero]
+    [
+      activeHero,
+      activeStage,
+      characters,
+      stages,
+      selectHero,
+      selectStage,
+      selectedHeroes,
+      selectedStage,
+      setActiveHero,
+      setActiveStage,
+      unselectLastHero,
+      unselectStage
+    ]
   )
 
   useEffect(() => {
@@ -38,6 +69,15 @@ const KEY_DIRECTION_MAP: Record<string, number> = {
   ArrowDown: 5,
   ArrowLeft: -1,
   ArrowRight: 1
+}
+
+const KEY_STAGE: Record<string, number> = {
+  KeyQ: 0,
+  KeyW: 1,
+  KeyE: 2,
+  KeyR: 3,
+  KeyT: 4,
+  KeyY: 5
 }
 
 const ACTIONS_MAP: Record<string, string> = {

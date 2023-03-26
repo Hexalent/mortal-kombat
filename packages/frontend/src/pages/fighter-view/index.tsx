@@ -1,9 +1,17 @@
-import { MotionPage } from '@/shared/ui'
+import { HeroImage, MotionPage } from '@/shared/ui'
 import { heroesSelectors } from '@/entities'
 import { motion } from 'framer-motion'
+import { StageImage } from '@/shared/ui/stage-image'
+import { useKeyboardEvents } from '@/shared/hooks'
 
 export const FighterView = () => {
   const selectedHeroes = heroesSelectors.use.selectedHeroes()
+  const selectedStage = heroesSelectors.use.selectedStage()
+  const activeStage = heroesSelectors.use.activeStage()
+  const stages = heroesSelectors.use.stages()
+
+  useKeyboardEvents()
+
   return (
     <MotionPage>
       <div className='relative h-screen w-screen'>
@@ -27,6 +35,16 @@ export const FighterView = () => {
               </div>
             </motion.div>
           ))}
+          <div className='absolute bottom-2 left-1/2 mx-auto grid h-[200px] w-full max-w-[800px] -translate-x-1/2 transform grid-cols-6 items-center justify-center overflow-hidden'>
+            {stages.map(stage => (
+              <StageImage
+                key={stage.title}
+                stage={stage}
+                isSelected={selectedStage?.number === stage.number}
+                isActive={activeStage?.number === stage.number}
+              />
+            ))}
+          </div>
         </div>
       </div>
     </MotionPage>
