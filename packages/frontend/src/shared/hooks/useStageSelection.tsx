@@ -11,17 +11,30 @@ export const useStageSelection = () => {
   const selectedStage = heroesSelectors.use.selectedStage()
   const unselectStage = heroesSelectors.use.unselectStage()
 
-  const handleKeyDown = useCallback(
-    (event: KeyboardEvent) => {
-      const { code } = event
-      const nextActiveStage = !selectedStage && stages.find(stage => stage.number === KEY_STAGE[code])
+  const stageNumberByKeyCode = (code: string): number | undefined => KEY_STAGE[code]
 
-      if (!selectedStage && nextActiveStage) {
+  const applyStageSelection = useCallback(
+    (event: KeyboardEvent): void => {
+      const nextActiveStage = !selectedStage && stages.find(stage => stage.number === stageNumberByKeyCode(event.code))
+      if (nextActiveStage) {
         setActiveStage(nextActiveStage)
-      } else if (!selectedStage && code === ACTIONS_MAP.APPLY) selectStage(activeStage as Stage)
-      else if (code === ACTIONS_MAP.ESCAPE) unselectStage()
+      }
     },
-    [activeStage, stages, selectStage, selectedStage, setActiveStage, unselectStage]
+    [selectedStage, setActiveStage, stages]
+  )
+
+  const handleKeyDown = useCallback(
+    (event: KeyboardEvent): void => {
+      const action = ACTIONS_MAP[event.code]
+      if (!selectedStage && action === 'APPLY') {
+        selectStage(activeStage as Stage)
+      } else if (action === 'ESCAPE') {
+        unselectStage()
+      } else {
+        applyStageSelection(event)
+      }
+    },
+    [activeStage, applyStageSelection, selectStage, selectedStage, unselectStage]
   )
 
   useEffect(() => {
@@ -42,6 +55,6 @@ const KEY_STAGE: Record<string, number> = {
 }
 
 const ACTIONS_MAP: Record<string, string> = {
-  APPLY: 'Enter',
-  ESCAPE: 'Escape'
+  Enter: 'APPLY',
+  Escape: 'ESCAPE'
 }

@@ -12,6 +12,21 @@ export const useAudio = (path: string = DEFAULT_MUSIC_PATH) => {
     setIsPlaying(false)
   }, [])
 
+  useEffect(() => {
+    if (isPlaying && isSoundTrackEnabled) {
+      audio.play()
+    } else {
+      audio.pause()
+    }
+
+    audio.addEventListener('ended', handleAudioEnd)
+
+    return () => {
+      audio.pause()
+      audio.removeEventListener('ended', handleAudioEnd)
+    }
+  }, [audio, handleAudioEnd, isPlaying, isSoundTrackEnabled])
+
   const playAudio = useCallback(
     (callback?: () => void) => {
       setIsPlaying(true)
@@ -30,21 +45,6 @@ export const useAudio = (path: string = DEFAULT_MUSIC_PATH) => {
   const togglePlayback = useCallback(() => {
     setIsPlaying(prevIsPlaying => !prevIsPlaying)
   }, [])
-
-  useEffect(() => {
-    if (isPlaying && isSoundTrackEnabled) {
-      audio.play()
-    } else {
-      audio.pause()
-    }
-
-    audio.addEventListener('ended', handleAudioEnd)
-
-    return () => {
-      audio.pause()
-      audio.removeEventListener('ended', handleAudioEnd)
-    }
-  }, [audio, handleAudioEnd, isPlaying, isSoundTrackEnabled])
 
   return useMemo(() => ({ isPlaying, togglePlayback, playAudio }), [isPlaying, playAudio, togglePlayback])
 }
