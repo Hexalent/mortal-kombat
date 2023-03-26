@@ -11,14 +11,19 @@ type Hero = {
 
 interface HeroesStore {
   selectedHeroes: Hero[]
+  selectedStage: Stage | null
   unselectLastHero: () => void
+  unselectStage: () => void
   characters: Character[]
   stages: Stage[]
   activeHero: Hero | null
+  activeStage: Stage | null
   setCharacters: (characters: Character[]) => void
   setStages: (stages: Stage[]) => void
   selectHero: (selectedHero: Hero) => void
+  selectStage: (selectedStage: Stage) => void
   setActiveHero: (activeHero: Hero | null) => void
+  setActiveStage: (activeStage: Stage | null) => void
 }
 
 const updateSelectedHeroes = (selectedHero: Hero, state: HeroesStore) => {
@@ -35,16 +40,28 @@ const updateSelectedHeroes = (selectedHero: Hero, state: HeroesStore) => {
   return state
 }
 
+const updateSelectedStage = (selectedHero: Stage, state: HeroesStore) => {
+  if (!state.selectedStage) {
+    return { selectedStage: state.activeStage }
+  }
+  return state
+}
+
 const useHeroesStore = create<HeroesStore>((set, get) => ({
   characters: [],
   stages: [],
   selectedHeroes: [],
+  selectedStage: null,
   activeHero: null,
+  activeStage: null,
   setCharacters: characters => set({ characters }),
   setStages: stages => set({ stages }),
   selectHero: selectedHero => set(state => updateSelectedHeroes(selectedHero, state)),
+  selectStage: selectedStage => set(state => updateSelectedStage(selectedStage, state)),
   setActiveHero: activeHero => set({ activeHero }),
-  unselectLastHero: () => set({ selectedHeroes: get().selectedHeroes.slice(0, -1) })
+  setActiveStage: activeStage => set({ activeStage }),
+  unselectLastHero: () => set({ selectedHeroes: get().selectedHeroes.slice(0, -1) }),
+  unselectStage: () => set({ selectedStage: null })
 }))
 
 const heroesSelectors = createSelectorFunctions(useHeroesStore)

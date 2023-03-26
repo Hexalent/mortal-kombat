@@ -1,22 +1,25 @@
-import { useCharacterSelection, useKeyboardEvents } from '@/shared/hooks'
+import { useAudio, useCharacterSelection, useKeyboardEvents } from '@/shared/hooks'
+import { SettingsHint, settingsSelectors } from '@/entities/settings'
 import { HeroImage } from '@/shared/ui/hero-image'
-import { Audio, GoBackButton, MotionPage } from '@/shared/ui'
+import { MotionPage } from '@/shared/ui'
 import { useNavigate } from 'react-router-dom'
 import { heroesSelectors } from '@/entities'
 import { Routes } from '@/shared/configs'
-import { SettingsHint, settingsSelectors } from '@/entities/settings'
+import { Character } from '@/shared/lib/images'
 
 export const FighterSelect = () => {
   const navigate = useNavigate()
+  const { playAudio } = useAudio()
   const activeHero = heroesSelectors.use.activeHero()
   const characters = heroesSelectors.use.characters()
   const selectedHeroes = heroesSelectors.use.selectedHeroes()
-  const isDetailsEnabled = settingsSelectors.use.isDetailsEnabled()
+  const areDetailsEnabled = settingsSelectors.use.areDetailsEnabled()
 
   useCharacterSelection()
   useKeyboardEvents()
 
-  const start = () => {
+  const startFight = () => {
+    playAudio()
     if (selectedHeroes.length === 2) {
       navigate(`/${Routes.FIGHTER_VIEW}`)
     }
@@ -24,12 +27,26 @@ export const FighterSelect = () => {
 
   const isHeroSelected = selectedHeroes.length === 2
 
+  const renderHeroDetails = (hero: Character, position: string) => (
+    <>
+      <div className={`absolute bottom-10 ${position}-10`}>
+        <img
+          src={hero?.gif}
+          alt='Hero gif'
+          className='object-fit h-[300px]'
+          style={position === 'right' ? { transform: 'scaleX(-1)' } : undefined}
+        />
+      </div>
+      <div className={`absolute bottom-2 ${position}-20 font-immortal text-xl font-bold text-white`}>
+        {hero?.title.replace('_', ' ')}
+      </div>
+    </>
+  )
+
   return (
     <MotionPage>
       <div className='relative flex h-screen w-screen items-center justify-center bg-[url(/public/background/bg.jpg)] bg-cover bg-center bg-no-repeat p-4'>
-        <GoBackButton />
-        <Audio />
-        {isDetailsEnabled ? <SettingsHint /> : null}
+        {areDetailsEnabled && <SettingsHint />}
         <div className='relative grid h-full max-h-[600px] w-full max-w-[850px] grid-cols-5 grid-rows-3 items-center justify-center overflow-hidden'>
           {characters.map(hero => (
             <HeroImage
@@ -40,39 +57,12 @@ export const FighterSelect = () => {
             />
           ))}
         </div>
-        {
-          <>
-            <div className='absolute bottom-10 left-10'>
-              <img
-                src={selectedHeroes[0] ? selectedHeroes[0].gif : activeHero?.gif}
-                alt='Hero gif'
-                className='object-fit h-[300px]'
-              />
-            </div>
-            <div className='absolute bottom-2 left-20 font-russo text-xl font-bold text-white'>
-              {selectedHeroes[0] ? selectedHeroes[0].title.replace('_', ' ') : activeHero?.title.replace('_', ' ')}
-            </div>
-          </>
-        }
-        {selectedHeroes[0] && (
-          <>
-            <div className={'absolute bottom-10 right-10'}>
-              <img
-                src={selectedHeroes[1] ? selectedHeroes[1].gif : activeHero?.gif}
-                alt='Hero gif'
-                className='object-fit h-[300px]'
-                style={{ transform: 'scaleX(-1)' }}
-              />
-            </div>
-            <div className='absolute bottom-2 right-20 font-russo text-xl font-bold text-white'>
-              {selectedHeroes[1] ? selectedHeroes[1].title.replace('_', ' ') : activeHero?.title.replace('_', ' ')}
-            </div>
-          </>
-        )}
+        {renderHeroDetails(selectedHeroes[0] || activeHero, 'left')}
+        {selectedHeroes[0] && renderHeroDetails(selectedHeroes[1] || activeHero, 'right')}
         {isHeroSelected && (
           <button
-            onClick={start}
-            className='absolute bottom-4 rounded border border-gray-400 bg-white py-2 px-4 font-semibold text-gray-800 shadow hover:bg-gray-100'
+            onClick={startFight}
+            className='absolute bottom-4 rounded border border-gray-400 bg-white py-2 px-4 font-immortal font-semibold text-gray-800 shadow hover:bg-gray-100'
           >
             START FIGHT
           </button>

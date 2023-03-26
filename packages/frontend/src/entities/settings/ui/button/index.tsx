@@ -1,12 +1,17 @@
 import clsx from 'clsx'
 import { settingsSelectors } from '@/entities/settings'
+import { ToggleOption } from '../toggle-option'
+import { useAudio } from '@/shared/hooks'
 
 type SettingsButtonProps = {
   className?: string
 }
 
 export const SettingsButton = ({ className }: SettingsButtonProps) => {
+  const { playAudio } = useAudio()
+
   const buttonClasses = clsx(
+    'font-immortal',
     'rounded-md',
     'border-b-2',
     'cursor-pointer',
@@ -22,29 +27,34 @@ export const SettingsButton = ({ className }: SettingsButtonProps) => {
     className
   )
 
-  const isDetailsEnabled = settingsSelectors.use.isDetailsEnabled()
-  const toggleDetails = settingsSelectors.use.toggleDetails()
+  const areDetailsEnabled = settingsSelectors.use.areDetailsEnabled()
+  const isSoundEnabled = settingsSelectors.use.isSoundEnabled()
+  const isSoundTrackEnabled = settingsSelectors.use.isSoundTrackEnabled()
+  const toggleSetting = settingsSelectors.use.toggleSetting()
 
   return (
     <div className='mt-4'>
-      <label htmlFor='settings' className={buttonClasses}>
+      <label htmlFor='settings' className={buttonClasses} onClick={playAudio}>
         Settings
       </label>
 
       <input type='checkbox' id='settings' className='modal-toggle' />
       <div className='modal'>
         <div className='modal-box bg-[#101010]'>
-          <h3 className='text-xl text-white'>Settings</h3>
-          <div className='flex justify-between py-3'>
-            <div>Show hints and game info</div>
-            <label className='swap'>
-              <input type='checkbox' className='hidden' checked={isDetailsEnabled} onChange={toggleDetails} />
-              <div className='swap-on'>ON</div>
-              <div className='swap-off'>OFF</div>
-            </label>
-          </div>
-          <div className='modal-action'>
-            <label htmlFor='settings' className='btn-xs btn bg-none text-sm text-white'>
+          <h3 className='font-immortal text-xl text-white'>Settings</h3>
+          <ToggleOption
+            label='Show hints and game info'
+            isChecked={areDetailsEnabled}
+            onChange={() => toggleSetting('details')}
+          />
+          <ToggleOption label='Music icon' isChecked={isSoundEnabled} onChange={() => toggleSetting('sound')} />
+          <ToggleOption
+            label='Action soundtrack'
+            isChecked={isSoundTrackEnabled}
+            onChange={() => toggleSetting('soundtrack')}
+          />
+          <div className='modal-action' onClick={playAudio}>
+            <label htmlFor='settings' className='btn-xs btn bg-none font-immortal text-sm text-white'>
               Close
             </label>
           </div>

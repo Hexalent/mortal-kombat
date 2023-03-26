@@ -1,17 +1,23 @@
-import { Audio, GoBackButton, MotionPage } from '@/shared/ui'
+import { HeroImage, MotionPage } from '@/shared/ui'
 import { heroesSelectors } from '@/entities'
 import { motion } from 'framer-motion'
+import { StageImage } from '@/shared/ui/stage-image'
+import { useKeyboardEvents } from '@/shared/hooks'
 
 export const FighterView = () => {
   const selectedHeroes = heroesSelectors.use.selectedHeroes()
+  const selectedStage = heroesSelectors.use.selectedStage()
+  const activeStage = heroesSelectors.use.activeStage()
+  const stages = heroesSelectors.use.stages()
+
+  useKeyboardEvents()
+
   return (
     <MotionPage>
       <div className='relative h-screen w-screen'>
-        <GoBackButton />
-        <Audio />
         <div className='absolute -z-0 h-full w-full bg-[url(https://www.teahub.io/photos/full/171-1716638_mortal-kombat-fire-dragon-mortal-kombat.jpg)] bg-cover bg-center bg-no-repeat blur-sm' />
         <div className='relative flex h-full w-full items-end justify-between px-20'>
-          <div className='absolute top-[50px] right-1/2 translate-x-1/2 font-russo text-8xl font-bold text-white'>
+          <div className='absolute top-[50px] right-1/2 translate-x-1/2 font-immortal text-8xl font-bold text-white'>
             Battle
           </div>
           {selectedHeroes.map((hero, index) => (
@@ -29,6 +35,16 @@ export const FighterView = () => {
               </div>
             </motion.div>
           ))}
+          <div className='absolute bottom-2 left-1/2 mx-auto grid h-[200px] w-full max-w-[800px] -translate-x-1/2 transform grid-cols-6 items-center justify-center overflow-hidden'>
+            {stages.map(stage => (
+              <StageImage
+                key={stage.title}
+                stage={stage}
+                isSelected={selectedStage?.number === stage.number}
+                isActive={activeStage?.number === stage.number}
+              />
+            ))}
+          </div>
         </div>
       </div>
     </MotionPage>

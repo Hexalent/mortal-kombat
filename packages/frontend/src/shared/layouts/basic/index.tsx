@@ -1,13 +1,18 @@
 import { Suspense } from 'react'
-import { Loader } from '@/shared/ui'
+import { Audio, GoBackButton, Loader } from '@/shared/ui'
 import { Outlet, useLocation } from 'react-router-dom'
 import { AnimatePresence, motion } from 'framer-motion'
+import { settingsSelectors } from '@/entities/settings'
 
 export const BasicLayout = () => {
   const location = useLocation()
+  const isStartRoute = location.pathname === '/'
+  const isSoundEnabled = settingsSelectors.use.isSoundEnabled()
 
   return (
     <div className='relative mx-auto min-h-screen overflow-hidden bg-black'>
+      {isStartRoute ? null : <GoBackButton />}
+      {isSoundEnabled ? <Audio /> : null}
       <AnimatePresence mode='wait'>
         <motion.div
           key={location.pathname}

@@ -18,6 +18,7 @@ export const MotionButton = ({ children, className, ...props }: MotionButtonProp
   const buttonClasses = clsx(
     'rounded-md',
     'border-b-2',
+    'font-immortal',
     'px-4',
     'py-1',
     'text-xl',
