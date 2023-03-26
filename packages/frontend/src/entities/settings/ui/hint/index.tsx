@@ -1,7 +1,7 @@
 export const SettingsHint = () => {
   return (
     <>
-      <div className='absolute right-10 bottom-10'>
+      <div className='absolute right-20 top-5'>
         <label htmlFor='hint' className='kbd kbd-md cursor-pointer'>
           Hint
         </label>
