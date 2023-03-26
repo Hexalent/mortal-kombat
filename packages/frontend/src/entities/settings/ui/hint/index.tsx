@@ -1,8 +1,20 @@
+import { settingsSelectors } from '@/entities/settings'
+import { useAudio } from '@/shared/hooks'
+
 export const SettingsHint = () => {
+  const isSoundTrackEnabled = settingsSelectors.use.isSoundTrackEnabled()
+  const { playAudio } = useAudio()
+
+  const onHintShow = () => {
+    if (isSoundTrackEnabled) {
+      playAudio()
+    }
+  }
+
   return (
     <>
       <div className='absolute right-20 top-5'>
-        <label htmlFor='hint' className='kbd kbd-md cursor-pointer'>
+        <label htmlFor='hint' className='kbd kbd-md cursor-pointer' onClick={onHintShow}>
           Hint
         </label>
 
