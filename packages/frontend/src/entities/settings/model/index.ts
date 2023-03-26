@@ -4,17 +4,24 @@ import { immer } from 'zustand/middleware/immer'
 import { persist } from 'zustand/middleware'
 
 interface SettingsStore {
-  isDetailsEnabled: boolean
-  toggleDetails: () => void
+  areDetailsEnabled: boolean
+  isSoundEnabled: boolean
+  toggleDetailsVisibility: () => void
+  toggleSound: () => void
 }
 
 const useSettingsStore = create(
   persist(
     immer<SettingsStore>(set => ({
-      isDetailsEnabled: false,
-      toggleDetails: () =>
+      areDetailsEnabled: false,
+      isSoundEnabled: true,
+      toggleDetailsVisibility: () =>
         set(state => {
-          state.isDetailsEnabled = !state.isDetailsEnabled
+          state.areDetailsEnabled = !state.areDetailsEnabled
+        }),
+      toggleSound: () =>
+        set(state => {
+          state.isSoundEnabled = !state.isSoundEnabled
         })
     })),
     { name: 'settings' }

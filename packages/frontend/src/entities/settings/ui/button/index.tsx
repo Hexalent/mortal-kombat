@@ -22,8 +22,10 @@ export const SettingsButton = ({ className }: SettingsButtonProps) => {
     className
   )
 
-  const isDetailsEnabled = settingsSelectors.use.isDetailsEnabled()
-  const toggleDetails = settingsSelectors.use.toggleDetails()
+  const areDetailsEnabled = settingsSelectors.use.areDetailsEnabled()
+  const toggleDetailsVisibility = settingsSelectors.use.toggleDetailsVisibility()
+  const isSoundEnabled = settingsSelectors.use.isSoundEnabled()
+  const toggleSound = settingsSelectors.use.toggleSound()
 
   return (
     <div className='mt-4'>
@@ -38,7 +40,20 @@ export const SettingsButton = ({ className }: SettingsButtonProps) => {
           <div className='flex justify-between py-3'>
             <div>Show hints and game info</div>
             <label className='swap'>
-              <input type='checkbox' className='hidden' checked={isDetailsEnabled} onChange={toggleDetails} />
+              <input
+                type='checkbox'
+                className='hidden'
+                checked={areDetailsEnabled}
+                onChange={toggleDetailsVisibility}
+              />
+              <div className='swap-on'>ON</div>
+              <div className='swap-off'>OFF</div>
+            </label>
+          </div>
+          <div className='flex justify-between py-3'>
+            <div>Music icon</div>
+            <label className='swap'>
+              <input type='checkbox' className='hidden' checked={isSoundEnabled} onChange={toggleSound} />
               <div className='swap-on'>ON</div>
               <div className='swap-off'>OFF</div>
             </label>
