@@ -40,13 +40,6 @@ const updateSelectedHeroes = (selectedHero: Hero, state: HeroesStore) => {
   return state
 }
 
-const updateSelectedStage = (selectedHero: Stage, state: HeroesStore) => {
-  if (!state.selectedStage) {
-    return { selectedStage: state.activeStage }
-  }
-  return state
-}
-
 const useHeroesStore = create<HeroesStore>((set, get) => ({
   characters: [],
   stages: [],
@@ -57,7 +50,7 @@ const useHeroesStore = create<HeroesStore>((set, get) => ({
   setCharacters: characters => set({ characters }),
   setStages: stages => set({ stages }),
   selectHero: selectedHero => set(state => updateSelectedHeroes(selectedHero, state)),
-  selectStage: selectedStage => set(state => updateSelectedStage(selectedStage, state)),
+  selectStage: selectedStage => set({ selectedStage }),
   setActiveHero: activeHero => set({ activeHero }),
   setActiveStage: activeStage => set({ activeStage }),
   unselectLastHero: () => set({ selectedHeroes: get().selectedHeroes.slice(0, -1) }),

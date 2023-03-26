@@ -21,12 +21,12 @@ export const useKeyboardEvents = () => {
       const activeHeroNum = activeHero?.number ?? 0
       const nextActiveHero = characters.find(hero => hero.number === activeHeroNum + KEY_DIRECTION_MAP[code])
 
-      if (nextActiveHero || (ACTIONS_MAP.APPLY === 'Enter' && activeHero)) {
+      if (nextActiveHero || (code === 'Enter' && activeHero)) {
         setActiveHero(nextActiveHero ?? selectedHeroes[0] ?? characters[0])
         if (code === ACTIONS_MAP.APPLY && activeHero) selectHero(activeHero as Character)
       } else if (code === ACTIONS_MAP.ESCAPE) unselectLastHero()
     },
-    [activeHero, characters, playAudio, selectHero, selectedHeroes, setActiveHero, unselectLastHero]
+    [activeHero, characters, selectHero, selectedHeroes, setActiveHero, unselectLastHero, playAudio]
   )
 
   useEffect(() => {

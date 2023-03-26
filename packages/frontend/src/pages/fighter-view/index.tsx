@@ -1,8 +1,8 @@
-import { HeroImage, MotionPage } from '@/shared/ui'
+import { MotionPage } from '@/shared/ui'
 import { heroesSelectors } from '@/entities'
 import { motion } from 'framer-motion'
 import { StageImage } from '@/shared/ui/stage-image'
-import { useKeyboardEvents } from '@/shared/hooks'
+import { useStageSelection } from '@/shared/hooks/useStageSelection'
 
 export const FighterView = () => {
   const selectedHeroes = heroesSelectors.use.selectedHeroes()
@@ -10,7 +10,7 @@ export const FighterView = () => {
   const activeStage = heroesSelectors.use.activeStage()
   const stages = heroesSelectors.use.stages()
 
-  useKeyboardEvents()
+  useStageSelection()
 
   return (
     <MotionPage>
@@ -41,7 +41,7 @@ export const FighterView = () => {
                 key={stage.title}
                 stage={stage}
                 isSelected={selectedStage?.number === stage.number}
-                isActive={activeStage?.number === stage.number}
+                isActive={selectedStage?.number ? false : activeStage?.number === stage.number}
               />
             ))}
           </div>
