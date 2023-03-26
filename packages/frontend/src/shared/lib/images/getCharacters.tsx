@@ -5,30 +5,39 @@ export type Character = {
   number: number
 }
 
-export const getCharacters = async (): Promise<Character[]> => {
-  const charactersMap: Record<string, Partial<Character>> = {}
+interface CharacterData {
+  name: string
+  paths: string[]
+}
 
-  const heroImages = import.meta.glob('/public/characters/*/*')
+const buildCharacter = (data: CharacterData, index: number): Character => {
+  const gifPath = data.paths.find(path => path.includes('_gif')) || ''
+  const imgPath = data.paths.find(path => !path.includes('_gif')) || ''
+
+  return {
+    title: data.name,
+    gif: gifPath,
+    img: imgPath,
+    number: index
+  }
+}
+
+export const getCharacters = async (): Promise<Character[]> => {
+  const heroImages = import.meta.glob('/public/characters/*/*') as Record<string, () => Promise<{ default: string }>>
   const images = await Promise.all(Object.values(heroImages).map(importImage => importImage()))
 
-  const imagePaths: string[] = images.map((image: any) => image.default)
+  const characters: Record<string, CharacterData> = images.reduce((acc: Record<string, CharacterData>, image) => {
+    const path = image.default
+    const name = path.split('/')[3]
 
-  imagePaths.forEach((path: string) => {
-    const pathComponents = path.split('/')
-    const name = pathComponents[3]
+    const character = acc[name] || { name, paths: [] }
+    character.paths.push(path)
 
-    if (!charactersMap[name]) {
-      charactersMap[name] = { title: name }
-    }
+    acc[name] = character
+    return acc
+  }, {})
 
-    if (path.includes('_gif')) {
-      charactersMap[name].gif = path
-    } else {
-      charactersMap[name].img = path
-    }
-  })
-
-  return Object.values(charactersMap).map((character, idx) => {
-    return { ...(character as Character), number: idx }
-  }) as Character[]
+  return Object.values(characters)
+    .map((data, index) => buildCharacter(data, index))
+    .sort((a, b) => (a.title > b.title ? 1 : -1))
 }

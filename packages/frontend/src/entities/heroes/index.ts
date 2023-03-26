@@ -1,7 +1,6 @@
 import { create } from 'zustand'
 import { createSelectorFunctions } from '@/shared/lib/selectors'
-import { mountStoreDevtool } from 'simple-zustand-devtools'
-import { Character } from '@/shared/lib/images'
+import { Character, Stage } from '@/shared/lib/images'
 
 type Hero = {
   title: string
@@ -14,8 +13,10 @@ interface HeroesStore {
   selectedHeroes: Hero[]
   unselectLastHero: () => void
   characters: Character[]
+  stages: Stage[]
   activeHero: Hero | null
   setCharacters: (characters: Character[]) => void
+  setStages: (stages: Stage[]) => void
   selectHero: (selectedHero: Hero) => void
   setActiveHero: (activeHero: Hero | null) => void
 }
@@ -36,17 +37,15 @@ const updateSelectedHeroes = (selectedHero: Hero, state: HeroesStore) => {
 
 const useHeroesStore = create<HeroesStore>((set, get) => ({
   characters: [],
+  stages: [],
   selectedHeroes: [],
   activeHero: null,
   setCharacters: characters => set({ characters }),
+  setStages: stages => set({ stages }),
   selectHero: selectedHero => set(state => updateSelectedHeroes(selectedHero, state)),
   setActiveHero: activeHero => set({ activeHero }),
   unselectLastHero: () => set({ selectedHeroes: get().selectedHeroes.slice(0, -1) })
 }))
-
-if (process.env.NODE_ENV === 'development') {
-  mountStoreDevtool('useHeroesStore', useHeroesStore)
-}
 
 const heroesSelectors = createSelectorFunctions(useHeroesStore)
 

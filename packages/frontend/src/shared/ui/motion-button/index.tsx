@@ -1,8 +1,9 @@
 import { HTMLMotionProps, motion } from 'framer-motion'
 import { PropsWithChildren } from 'react'
+import clsx from 'clsx'
 
 type MotionButtonProps = PropsWithChildren<HTMLMotionProps<'button'>>
-export const MotionButton = ({ children, ...props }: MotionButtonProps) => {
+export const MotionButton = ({ children, className, ...props }: MotionButtonProps) => {
   const scaleUp = {
     hover: { scale: 1 },
     tap: { scale: 0.75 }
@@ -14,9 +15,24 @@ export const MotionButton = ({ children, ...props }: MotionButtonProps) => {
     damping: 20
   }
 
+  const buttonClasses = clsx(
+    'rounded-md',
+    'border-b-2',
+    'px-4',
+    'py-1',
+    'text-xl',
+    'text-white',
+    'shadow-md',
+    'transition-all',
+    'duration-300',
+    'hover:bg-white',
+    'hover:text-black',
+    className
+  )
+
   return (
     <motion.button
-      className='rounded-md bg-blue-500 px-4 py-2 text-white transition-all duration-200 hover:bg-blue-700'
+      className={buttonClasses}
       whileHover={scaleUp.hover}
       whileTap={scaleUp.tap}
       transition={transition}

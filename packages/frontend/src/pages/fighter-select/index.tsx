@@ -1,14 +1,17 @@
 import { useCharacterSelection, useKeyboardEvents } from '@/shared/hooks'
-import { HeroImage, MotionPage } from '@/shared/ui'
+import { HeroImage } from '@/shared/ui/hero-image'
+import { Audio, GoBackButton, MotionPage } from '@/shared/ui'
 import { useNavigate } from 'react-router-dom'
 import { heroesSelectors } from '@/entities'
 import { Routes } from '@/shared/configs'
+import { SettingsHint, settingsSelectors } from '@/entities/settings'
 
 export const FighterSelect = () => {
   const navigate = useNavigate()
+  const activeHero = heroesSelectors.use.activeHero()
   const characters = heroesSelectors.use.characters()
   const selectedHeroes = heroesSelectors.use.selectedHeroes()
-  const activeHero = heroesSelectors.use.activeHero()
+  const isDetailsEnabled = settingsSelectors.use.isDetailsEnabled()
 
   useCharacterSelection()
   useKeyboardEvents()
@@ -23,7 +26,10 @@ export const FighterSelect = () => {
 
   return (
     <MotionPage>
-      <div className='flex h-screen w-screen items-center justify-center bg-[url(/public/background/bg.jpg)] bg-cover bg-center bg-no-repeat p-4'>
+      <div className='relative flex h-screen w-screen items-center justify-center bg-[url(/public/background/bg.jpg)] bg-cover bg-center bg-no-repeat p-4'>
+        <GoBackButton />
+        <Audio />
+        {isDetailsEnabled ? <SettingsHint /> : null}
         <div className='relative grid h-full max-h-[600px] w-full max-w-[850px] grid-cols-5 grid-rows-3 items-center justify-center overflow-hidden'>
           {characters.map(hero => (
             <HeroImage
@@ -34,20 +40,34 @@ export const FighterSelect = () => {
             />
           ))}
         </div>
-        {selectedHeroes.length >= 1 && (
-          <div className='absolute bottom-1 left-10'>
-            <img src={selectedHeroes[0].gif} alt='Hero gif' className='object-fit h-[300px]' />
-          </div>
-        )}
-        {isHeroSelected && (
-          <div className={'absolute bottom-1 right-10'}>
-            <img
-              src={selectedHeroes[1].gif}
-              alt='Hero gif'
-              className='object-fit h-[300px]'
-              style={{ transform: 'scaleX(-1)' }}
-            />
-          </div>
+        {
+          <>
+            <div className='absolute bottom-10 left-10'>
+              <img
+                src={selectedHeroes[0] ? selectedHeroes[0].gif : activeHero?.gif}
+                alt='Hero gif'
+                className='object-fit h-[300px]'
+              />
+            </div>
+            <div className='absolute bottom-2 left-20 font-russo text-xl font-bold text-white'>
+              {selectedHeroes[0] ? selectedHeroes[0].title.replace('_', ' ') : activeHero?.title.replace('_', ' ')}
+            </div>
+          </>
+        }
+        {selectedHeroes[0] && (
+          <>
+            <div className={'absolute bottom-10 right-10'}>
+              <img
+                src={selectedHeroes[1] ? selectedHeroes[1].gif : activeHero?.gif}
+                alt='Hero gif'
+                className='object-fit h-[300px]'
+                style={{ transform: 'scaleX(-1)' }}
+              />
+            </div>
+            <div className='absolute bottom-2 right-20 font-russo text-xl font-bold text-white'>
+              {selectedHeroes[1] ? selectedHeroes[1].title.replace('_', ' ') : activeHero?.title.replace('_', ' ')}
+            </div>
+          </>
         )}
         {isHeroSelected && (
           <button
