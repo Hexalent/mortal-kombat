@@ -49,14 +49,16 @@ export const FighterView = () => {
               </div>
             </motion.div>
           ))}
-          <div className='absolute bottom-2 left-1/2 mx-auto grid h-[200px] w-full max-w-[800px] -translate-x-1/2 transform grid-cols-6 items-center justify-center overflow-hidden'>
+          <div className='absolute bottom-2 left-1/2 mx-auto grid h-[200px] w-full max-w-[1000px] -translate-x-1/2 transform grid-cols-6 items-center justify-center overflow-hidden'>
             {stages.map(stage => (
-              <StageImage
-                key={stage.title}
-                stage={stage}
-                isSelected={selectedStage?.number === stage.number}
-                isActive={selectedStage?.number ? false : activeStage?.number === stage.number}
-              />
+              <div className='flex items-center justify-center' key={stage.img}>
+                <StageImage
+                  key={stage.title}
+                  stage={stage}
+                  isSelected={selectedStage?.number === stage.number}
+                  isActive={selectedStage?.number ? false : activeStage?.number === stage.number}
+                />
+              </div>
             ))}
           </div>
           {selectedStage && (

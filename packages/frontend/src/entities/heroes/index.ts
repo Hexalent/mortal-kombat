@@ -1,6 +1,7 @@
 import { create } from 'zustand'
 import { createSelectorFunctions } from '@/shared/lib/selectors'
 import { Character, Stage } from '@/shared/lib/images'
+import { persist } from 'zustand/middleware'
 
 type Hero = {
   title: string
@@ -41,27 +42,32 @@ const updateSelectedHeroes = (selectedHero: Hero, state: HeroesStore) => {
   return state
 }
 
-const useHeroesStore = create<HeroesStore>((set, get) => ({
-  characters: [],
-  stages: [],
-  selectedHeroes: [],
-  selectedStage: null,
-  activeHero: null,
-  activeStage: null,
-  setCharacters: characters => set({ characters }),
-  setStages: stages => set({ stages }),
-  selectHero: selectedHero => set(state => updateSelectedHeroes(selectedHero, state)),
-  selectStage: selectedStage => set({ selectedStage }),
-  setActiveHero: activeHero => set({ activeHero }),
-  setActiveStage: activeStage => set({ activeStage }),
-  unselectLastHero: () => set({ selectedHeroes: get().selectedHeroes.slice(0, -1) }),
-  unselectStage: () => set({ selectedStage: null }),
-  resetGame: () =>
-    set({
+const useHeroesStore = create(
+  persist<HeroesStore>(
+    (set, get) => ({
+      characters: [],
+      stages: [],
       selectedHeroes: [],
-      selectedStage: null
-    })
-}))
+      selectedStage: null,
+      activeHero: null,
+      activeStage: null,
+      setCharacters: characters => set({ characters }),
+      setStages: stages => set({ stages }),
+      selectHero: selectedHero => set(state => updateSelectedHeroes(selectedHero, state)),
+      selectStage: selectedStage => set({ selectedStage }),
+      setActiveHero: activeHero => set({ activeHero }),
+      setActiveStage: activeStage => set({ activeStage }),
+      unselectLastHero: () => set({ selectedHeroes: get().selectedHeroes.slice(0, -1) }),
+      unselectStage: () => set({ selectedStage: null }),
+      resetGame: () =>
+        set({
+          selectedHeroes: [],
+          selectedStage: null
+        })
+    }),
+    { name: 'heroes' }
+  )
+)
 
 const heroesSelectors = createSelectorFunctions(useHeroesStore)
 
