@@ -4,6 +4,7 @@ import { useCallback, useEffect } from 'react'
 
 export const useCharacterSelection = () => {
   const setActiveHero = heroesSelectors.use.setActiveHero()
+  const setActiveStage = heroesSelectors.use.setActiveStage()
   const setCharacters = heroesSelectors.use.setCharacters()
   const setStages = heroesSelectors.use.setStages()
 
@@ -12,8 +13,10 @@ export const useCharacterSelection = () => {
 
     setCharacters(characters)
     setActiveHero(characters[0])
+
     setStages(stages)
-  }, [setActiveHero, setCharacters, setStages])
+    setActiveStage(stages[0])
+  }, [setActiveHero, setActiveStage, setCharacters, setStages])
 
   useEffect(() => {
     getHeroesData()
