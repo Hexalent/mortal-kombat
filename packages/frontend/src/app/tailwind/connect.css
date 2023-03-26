@@ -1,3 +1,22 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+  @font-face {font-family: "Mortal";
+    src: url("../public/fonts/mortal/1de10e80473f4d25bbcb35658b80acac.eot"); /* IE9*/
+    src: url("../public/fonts/mortal/1de10e80473f4d25bbcb35658b80acac.eot?#iefix") format("embedded-opentype"), /* IE6-IE8 */
+    url("../public/fonts/mortal/1de10e80473f4d25bbcb35658b80acac.woff2") format("woff2"), /* chrome、firefox */
+    url("../public/fonts/mortal/1de10e80473f4d25bbcb35658b80acac.woff") format("woff"), /* chrome、firefox */
+    url("../public/fonts/mortal/1de10e80473f4d25bbcb35658b80acac.ttf") format("truetype"), /* chrome、firefox、opera、Safari, Android, iOS 4.2+*/
+    url("../public/fonts/mortal/1de10e80473f4d25bbcb35658b80acac.svg#Mortal Kombat 2") format("svg"); /* iOS 4.1- */
+  }
+  @font-face {font-family: "Immortal";
+    src: url("../public/fonts/immortal/e2c55e1fdd19ca7c78f06bf5f79dad06.eot"); /* IE9*/
+    src: url("../public/fonts/immortal/e2c55e1fdd19ca7c78f06bf5f79dad06.eot?#iefix") format("embedded-opentype"), /* IE6-IE8 */
+    url("../public/fonts/immortal/e2c55e1fdd19ca7c78f06bf5f79dad06.woff2") format("woff2"), /* chrome、firefox */
+    url("../public/fonts/immortal/e2c55e1fdd19ca7c78f06bf5f79dad06.woff") format("woff"), /* chrome、firefox */
+    url("../public/fonts/immortal/e2c55e1fdd19ca7c78f06bf5f79dad06.ttf") format("truetype"), /* chrome、firefox、opera、Safari, Android, iOS 4.2+*/
+    url("../public/fonts/immortal/e2c55e1fdd19ca7c78f06bf5f79dad06.svg#The Immortal") format("svg"); /* iOS 4.1- */
+  }
+}
