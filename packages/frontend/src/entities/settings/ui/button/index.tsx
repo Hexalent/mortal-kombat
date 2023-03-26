@@ -34,7 +34,13 @@ export const SettingsButton = ({ className }: SettingsButtonProps) => {
 
   return (
     <div className='mt-4'>
-      <label htmlFor='settings' className={buttonClasses} onClick={playAudio}>
+      <label
+        htmlFor='settings'
+        className={buttonClasses}
+        onClick={() => {
+          playAudio()
+        }}
+      >
         Settings
       </label>
 
@@ -53,7 +59,12 @@ export const SettingsButton = ({ className }: SettingsButtonProps) => {
             isChecked={isSoundTrackEnabled}
             onChange={() => toggleSetting('soundtrack')}
           />
-          <div className='modal-action' onClick={playAudio}>
+          <div
+            className='modal-action'
+            onClick={() => {
+              playAudio()
+            }}
+          >
             <label htmlFor='settings' className='btn-xs btn bg-none font-immortal text-sm text-white'>
               Close
             </label>
