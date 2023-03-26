@@ -11,9 +11,9 @@ export const Heading = ({ children, level = 'h1', className = '' }: HeadingProps
   const HeadingTag = level
 
   const defaultClasses = [
-    'font-mortal',
+    'font-immortal',
     'text-red-600',
-    'text-7xl',
+    'text-8xl',
     'leading-none',
     'tracking-tight',
     'uppercase',
