@@ -7,12 +7,13 @@ import { settingsSelectors } from '@/entities/settings'
 export const BasicLayout = () => {
   const location = useLocation()
   const isStartRoute = location.pathname === '/'
+  const isHeroView = location.pathname === '/fighter-view'
   const isSoundEnabled = settingsSelectors.use.isSoundEnabled()
 
   return (
     <div className='relative mx-auto min-h-screen overflow-hidden bg-black'>
       {isStartRoute ? null : <GoBackButton />}
-      {isSoundEnabled ? <Audio /> : null}
+      {isSoundEnabled && !isHeroView ? <Audio /> : null}
       <AnimatePresence mode='wait'>
         <motion.div
           key={location.pathname}

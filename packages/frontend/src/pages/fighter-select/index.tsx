@@ -5,29 +5,6 @@ import { MotionPage } from '@/shared/ui'
 import { useNavigate } from 'react-router-dom'
 import { heroesSelectors } from '@/entities'
 import { Routes } from '@/shared/configs'
-import { Character } from '@/shared/lib/images'
-
-type HeroGif = {
-  hero: Character
-  position: string
-}
-const HeroGif = ({ hero, position }: HeroGif) => {
-  const heroTitle = hero?.title.replace('_', ' ')
-
-  return (
-    <>
-      <div className={`absolute bottom-10 ${position}-10`}>
-        <img
-          src={hero?.gif}
-          alt='Hero gif'
-          className='object-fit h-[300px]'
-          style={position === 'right' ? { transform: 'scaleX(-1)' } : {}}
-        />
-      </div>
-      <div className={`absolute bottom-2 ${position}-20 font-russo text-xl font-bold text-white`}>{heroTitle}</div>
-    </>
-  )
-}
 
 export const FighterSelect = () => {
   const navigate = useNavigate()
@@ -63,8 +40,33 @@ export const FighterSelect = () => {
             />
           ))}
         </div>
-        <HeroGif hero={selectedHeroes[0] || activeHero} position='left' />
-        {selectedHeroes[0] && <HeroGif hero={selectedHeroes[1] || activeHero} position='right' />}
+        <>
+          <div className='absolute bottom-10 left-10'>
+            <img
+              src={selectedHeroes[0] ? selectedHeroes[0].gif : activeHero?.gif}
+              alt='Hero gif'
+              className='object-fit h-[300px]'
+            />
+          </div>
+          <div className='absolute bottom-2 left-20 font-russo text-xl font-bold text-white'>
+            {selectedHeroes[0] ? selectedHeroes[0].title.replace('_', ' ') : activeHero?.title.replace('_', ' ')}
+          </div>
+        </>
+        {selectedHeroes[0] && (
+          <>
+            <div className={'absolute bottom-10 right-10'}>
+              <img
+                src={selectedHeroes[1] ? selectedHeroes[1].gif : activeHero?.gif}
+                alt='Hero gif'
+                className='object-fit h-[300px]'
+                style={{ transform: 'scaleX(-1)' }}
+              />
+            </div>
+            <div className='absolute bottom-2 right-20 font-russo text-xl font-bold text-white'>
+              {selectedHeroes[1] ? selectedHeroes[1].title.replace('_', ' ') : activeHero?.title.replace('_', ' ')}
+            </div>
+          </>
+        )}
         {isHeroSelected && (
           <button
             onClick={startFight}

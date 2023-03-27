@@ -1,14 +1,15 @@
-import { MotionPage } from '@/shared/ui'
+import { HeroSelectionHint, MotionPage } from '@/shared/ui'
 import { heroesSelectors } from '@/entities'
 import { motion } from 'framer-motion'
 import { StageImage } from '@/shared/ui/stage-image'
 import { useStageSelection } from '@/shared/hooks/useStageSelection'
 import { Routes } from '@/shared/configs'
 import { useNavigate } from 'react-router-dom'
+import { settingsSelectors } from '@/entities/settings'
 
 export const FighterView = () => {
   const navigate = useNavigate()
-
+  const areDetailsEnabled = settingsSelectors.use.areDetailsEnabled()
   const selectedHeroes = heroesSelectors.use.selectedHeroes()
   const selectedStage = heroesSelectors.use.selectedStage()
   const activeStage = heroesSelectors.use.activeStage()
@@ -30,6 +31,7 @@ export const FighterView = () => {
             backgroundPosition: 'center'
           }}
         />
+        {areDetailsEnabled && <HeroSelectionHint />}
         <div className='relative flex h-full w-full items-end justify-between px-20'>
           <div className='absolute top-[50px] right-1/2 translate-x-1/2 font-immortal text-8xl font-bold text-white'>
             Battle
