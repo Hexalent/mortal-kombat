@@ -3,12 +3,12 @@
   "private": true,
   "scripts": {
     "prepare": "husky install",
-    "develop": "nx dev @mortal/frontend",
+    "dev": "nx dev @mortal/frontend",
     "format": "nx run-many --target=format",
     "lint": "nx run-many --target=lint",
     "test": "nx run-many --target=test",
-    "build": "nx build @naur/mortal",
-    "serve": "nx serve @naur/mortal",
+    "build": "nx build @mortal/frontend",
+    "serve": "nx serve @mortal/frontend",
     "clean": "nx run-many --target=clean",
     "commit": "commit"
   },

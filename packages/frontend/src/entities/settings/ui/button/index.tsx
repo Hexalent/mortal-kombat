@@ -32,9 +32,13 @@ export const SettingsButton = ({ className }: SettingsButtonProps) => {
   const isSoundTrackEnabled = settingsSelectors.use.isSoundTrackEnabled()
   const toggleSetting = settingsSelectors.use.toggleSetting()
 
+  const play = () => {
+    playAudio()
+  }
+
   return (
     <div className='mt-4'>
-      <label htmlFor='settings' className={buttonClasses} onClick={playAudio}>
+      <label htmlFor='settings' className={buttonClasses} onClick={play}>
         Settings
       </label>
 
@@ -53,7 +57,7 @@ export const SettingsButton = ({ className }: SettingsButtonProps) => {
             isChecked={isSoundTrackEnabled}
             onChange={() => toggleSetting('soundtrack')}
           />
-          <div className='modal-action' onClick={playAudio}>
+          <div className='modal-action' onClick={play}>
             <label htmlFor='settings' className='btn-xs btn bg-none font-immortal text-sm text-white'>
               Close
             </label>

@@ -9,12 +9,12 @@ export const StartGame = () => {
   const navigate = useNavigate()
   const isSoundTrackEnabled = settingsSelectors.use.isSoundTrackEnabled()
   const { playAudio } = useAudio()
-
   const handleStartGame = () => {
     if (isSoundTrackEnabled) {
-      playAudio(() => navigate(Routes.FIGHTER_SELECT))
-    }
-    navigate(Routes.FIGHTER_SELECT)
+      playAudio(() => {
+        navigate(Routes.FIGHTER_SELECT)
+      })
+    } else navigate(Routes.FIGHTER_SELECT)
   }
 
   return (

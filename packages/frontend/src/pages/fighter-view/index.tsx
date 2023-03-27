@@ -1,21 +1,37 @@
-import { HeroImage, MotionPage } from '@/shared/ui'
+import { HeroSelectionHint, MotionPage } from '@/shared/ui'
 import { heroesSelectors } from '@/entities'
 import { motion } from 'framer-motion'
 import { StageImage } from '@/shared/ui/stage-image'
-import { useKeyboardEvents } from '@/shared/hooks'
+import { useStageSelection } from '@/shared/hooks/useStageSelection'
+import { Routes } from '@/shared/configs'
+import { useNavigate } from 'react-router-dom'
+import { settingsSelectors } from '@/entities/settings'
 
 export const FighterView = () => {
+  const navigate = useNavigate()
+  const areDetailsEnabled = settingsSelectors.use.areDetailsEnabled()
   const selectedHeroes = heroesSelectors.use.selectedHeroes()
   const selectedStage = heroesSelectors.use.selectedStage()
   const activeStage = heroesSelectors.use.activeStage()
   const stages = heroesSelectors.use.stages()
 
-  useKeyboardEvents()
+  useStageSelection()
+
+  const startFight = () => navigate(`/${Routes.BATTLE_VIEW}`)
 
   return (
     <MotionPage>
       <div className='relative h-screen w-screen'>
-        <div className='absolute -z-0 h-full w-full bg-[url(https://www.teahub.io/photos/full/171-1716638_mortal-kombat-fire-dragon-mortal-kombat.jpg)] bg-cover bg-center bg-no-repeat blur-sm' />
+        <div
+          className={`absolute -z-0 h-full w-full bg-cover bg-center bg-no-repeat blur-sm`}
+          style={{
+            backgroundImage: `url(${activeStage?.img})`,
+            backgroundRepeat: 'no-repeat',
+            backgroundSize: 'cover',
+            backgroundPosition: 'center'
+          }}
+        />
+        {areDetailsEnabled && <HeroSelectionHint />}
         <div className='relative flex h-full w-full items-end justify-between px-20'>
           <div className='absolute top-[50px] right-1/2 translate-x-1/2 font-immortal text-8xl font-bold text-white'>
             Battle
@@ -35,16 +51,26 @@ export const FighterView = () => {
               </div>
             </motion.div>
           ))}
-          <div className='absolute bottom-2 left-1/2 mx-auto grid h-[200px] w-full max-w-[800px] -translate-x-1/2 transform grid-cols-6 items-center justify-center overflow-hidden'>
+          <div className='absolute bottom-2 left-1/2 mx-auto grid h-[200px] w-full max-w-[1000px] -translate-x-1/2 transform grid-cols-6 items-center justify-center overflow-hidden'>
             {stages.map(stage => (
-              <StageImage
-                key={stage.title}
-                stage={stage}
-                isSelected={selectedStage?.number === stage.number}
-                isActive={activeStage?.number === stage.number}
-              />
+              <div className='flex items-center justify-center' key={stage.img}>
+                <StageImage
+                  key={stage.title}
+                  stage={stage}
+                  isSelected={selectedStage?.number === stage.number}
+                  isActive={selectedStage?.number ? false : activeStage?.number === stage.number}
+                />
+              </div>
             ))}
           </div>
+          {selectedStage && (
+            <button
+              onClick={startFight}
+              className='absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 transform rounded border border-gray-400 bg-white py-2 px-4 font-immortal text-2xl text-gray-800 shadow hover:bg-gray-100'
+            >
+              START FIGHT
+            </button>
+          )}
         </div>
       </div>
     </MotionPage>

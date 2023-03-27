@@ -1,6 +1,7 @@
 import { create } from 'zustand'
 import { createSelectorFunctions } from '@/shared/lib/selectors'
 import { Character, Stage } from '@/shared/lib/images'
+import { persist } from 'zustand/middleware'
 
 type Hero = {
   title: string
@@ -24,6 +25,7 @@ interface HeroesStore {
   selectStage: (selectedStage: Stage) => void
   setActiveHero: (activeHero: Hero | null) => void
   setActiveStage: (activeStage: Stage | null) => void
+  resetGame: () => void
 }
 
 const updateSelectedHeroes = (selectedHero: Hero, state: HeroesStore) => {
@@ -40,29 +42,32 @@ const updateSelectedHeroes = (selectedHero: Hero, state: HeroesStore) => {
   return state
 }
 
-const updateSelectedStage = (selectedHero: Stage, state: HeroesStore) => {
-  if (!state.selectedStage) {
-    return { selectedStage: state.activeStage }
-  }
-  return state
-}
-
-const useHeroesStore = create<HeroesStore>((set, get) => ({
-  characters: [],
-  stages: [],
-  selectedHeroes: [],
-  selectedStage: null,
-  activeHero: null,
-  activeStage: null,
-  setCharacters: characters => set({ characters }),
-  setStages: stages => set({ stages }),
-  selectHero: selectedHero => set(state => updateSelectedHeroes(selectedHero, state)),
-  selectStage: selectedStage => set(state => updateSelectedStage(selectedStage, state)),
-  setActiveHero: activeHero => set({ activeHero }),
-  setActiveStage: activeStage => set({ activeStage }),
-  unselectLastHero: () => set({ selectedHeroes: get().selectedHeroes.slice(0, -1) }),
-  unselectStage: () => set({ selectedStage: null })
-}))
+const useHeroesStore = create(
+  persist<HeroesStore>(
+    (set, get) => ({
+      characters: [],
+      stages: [],
+      selectedHeroes: [],
+      selectedStage: null,
+      activeHero: null,
+      activeStage: null,
+      setCharacters: characters => set({ characters }),
+      setStages: stages => set({ stages }),
+      selectHero: selectedHero => set(state => updateSelectedHeroes(selectedHero, state)),
+      selectStage: selectedStage => set({ selectedStage }),
+      setActiveHero: activeHero => set({ activeHero }),
+      setActiveStage: activeStage => set({ activeStage }),
+      unselectLastHero: () => set({ selectedHeroes: get().selectedHeroes.slice(0, -1) }),
+      unselectStage: () => set({ selectedStage: null }),
+      resetGame: () =>
+        set({
+          selectedHeroes: [],
+          selectedStage: null
+        })
+    }),
+    { name: 'heroes' }
+  )
+)
 
 const heroesSelectors = createSelectorFunctions(useHeroesStore)
 

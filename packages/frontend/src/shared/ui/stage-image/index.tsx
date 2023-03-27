@@ -16,7 +16,7 @@ export const StageImage = memo(({ stage, isActive, isSelected }: StageImageProps
       <ImageWithFallback
         src={stage.img}
         alt={`Stage ${stage.title}`}
-        className={`relative object-contain shadow-sm ${borderClass}`}
+        className={`relative object-fill shadow-sm ${borderClass}`}
       />
     </div>
   )
