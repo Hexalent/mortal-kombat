@@ -1,7 +1,6 @@
 {
-  "buildCommand": "cd ../.. && nx run @mortal/frontend:build --configuration=production",
+  "buildCommand": "yarn build",
   "cleanUrls": true,
-  "devCommand": "nx dev @mortal/frontend",
-  "outputDirectory": "dist",
-  "rewrites": [{ "source": "/packages/*/(.*)", "destination": "/packages/frontend/src/app/index.tsx" }]
+  "devCommand": "yarn dev",
+  "rewrites": [{ "source": "/packages/frontend/*/(.*)", "destination": "/packages/frontend/src/app/index.tsx" }]
 }
