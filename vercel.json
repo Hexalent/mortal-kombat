@@ -1,6 +1,6 @@
 {
-  "buildCommand": "yarn build",
+  "buildCommand": "cd ../.. && nx run @mortal/frontend:build --configuration=production --outputPath=apps/app/dist",
   "cleanUrls": true,
-  "devCommand": "yarn dev"
-
+  "devCommand": "yarn dev",
+  "outputDirectory": "dist"
 }
