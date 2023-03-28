@@ -1,4 +1,13 @@
 {
+  "$schema": "./node_modules/nx/schemas/nx-schema.json",
+  "npmScope": "with-nx",
+  "implicitDependencies": {
+    "package.json": {
+      "dependencies": "*",
+      "devDependencies": "*"
+    },
+    ".eslintrc.json": "*"
+  },
   "tasksRunnerOptions": {
     "default": {
       "runner": "nx/tasks-runners/default",
@@ -12,7 +21,9 @@
           "test:debug",
           "test:e2e",
           "build"
-        ]
+        ],
+        "verbose": true,
+        "silent": true
       }
     }
   },
@@ -31,5 +42,14 @@
       ]
     }
   },
-  "defaultBase": "develop"
+  "generators": {
+    "@nrwl/react": {
+      "application": {
+        "babel": true
+      }
+    }
+  },
+  "affected": {
+    "defaultBase": "dev"
+  }
 }

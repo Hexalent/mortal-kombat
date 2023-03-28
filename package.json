@@ -1,5 +1,7 @@
 {
   "name": "mortal",
+  "license": "MIT",
+  "homepage": "https://github.com/Hexalent/mortal-kombat",
   "private": true,
   "scripts": {
     "prepare": "husky install",
