@@ -1,6 +1,6 @@
 {
   "buildCommand": "yarn build",
   "cleanUrls": true,
-  "devCommand": "yarn dev",
-  "framework": "nextjs"
+  "devCommand": "yarn dev"
+
 }
