@@ -2,5 +2,6 @@
   "buildCommand": "cd ../.. && nx run @mortal/frontend:build --configuration=production",
   "cleanUrls": true,
   "devCommand": "nx dev @mortal/frontend",
-  "outputDirectory": "dist"
+  "outputDirectory": "dist",
+  "rewrites": [{ "source": "/(.*)", "destination": "/" }]
 }
