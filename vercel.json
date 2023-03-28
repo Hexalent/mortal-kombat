@@ -1,6 +1,6 @@
 {
-  "buildCommand": "yarn build",
+  "buildCommand": "cd ../.. && nx run @mortal/frontend:build --configuration=production",
   "cleanUrls": true,
-  "devCommand": "yarn dev",
-  "framework": "nextjs"
+  "devCommand": "nx dev @mortal/frontend",
+  "outputDirectory": "dist"
 }
