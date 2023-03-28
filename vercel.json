@@ -3,5 +3,5 @@
   "cleanUrls": true,
   "devCommand": "nx dev @mortal/frontend",
   "outputDirectory": "dist",
-  "rewrites": [{ "source": "/(.*)", "destination": "/" }]
+  "rewrites": [{ "source": "/packages/*/(.*)", "destination": "/packages/frontend/src/app/index.tsx" }]
 }
