@@ -2,5 +2,5 @@
   "buildCommand": "yarn build",
   "cleanUrls": true,
   "devCommand": "yarn dev",
-  "rewrites": [{ "source": "/packages/frontend/*/(.*)", "destination": "/packages/frontend/src/app/index.tsx" }]
+  "rewrites": [{ "source": "/src", "destination": "/src/app/index.tsx" }]
 }
