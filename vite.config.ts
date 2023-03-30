@@ -28,7 +28,7 @@ export default defineConfig(async () => {
       alias: {
         '@': resolve(packageRoot, './src')
       }
-    }
+    },
     define: {
       'import.meta.imageUrls': JSON.stringify(imageUrls)
     }
