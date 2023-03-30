@@ -27,6 +27,7 @@ export const getCharacters = async (): Promise<Character[]> => {
     string,
     () => Promise<{ default: string }>
   >
+  console.log(heroImages)
   const images = await Promise.all(Object.values(heroImages).map(importImage => importImage()))
 
   const characters: Record<string, CharacterData> = images.reduce((acc: Record<string, CharacterData>, image) => {
