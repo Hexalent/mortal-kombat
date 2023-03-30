@@ -1,6 +1,0 @@
-{
-  "buildCommand": "yarn build",
-  "cleanUrls": true,
-  "devCommand": "yarn dev",
-  "rewrites": [{ "source": "/src", "destination": "/src/app/index.tsx" }]
-}
