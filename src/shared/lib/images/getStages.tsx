@@ -5,7 +5,7 @@ export type Stage = {
 }
 
 export const getStages = async (): Promise<Stage[]> => {
-  const stageImages = import.meta.glob('../../assets/stages/*') as Record<string, () => Promise<{ default: string }>>
+  const stageImages = import.meta.glob('./stages/*') as Record<string, () => Promise<{ default: string }>>
   const imagePaths = await Promise.all(Object.values(stageImages).map(importImage => importImage()))
 
   return imagePaths.map((path, index) => ({

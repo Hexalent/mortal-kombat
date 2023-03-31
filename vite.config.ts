@@ -15,7 +15,17 @@ async function getImageUrls() {
   const fontFiles = await fs.readdir(fontDir)
   const fontUrls = fontFiles.map(file => `/public/fonts/${file}`)
 
-  return [...backgroundUrls, ...fontUrls]
+  const paths = []
+
+  const charactersDir = join(__dirname, 'public', 'characters')
+  const charactersFiles = await fs.readdir(charactersDir)
+  const charactersUrls = charactersFiles.map(async dir => {
+    const characterDir = join(__dirname, 'public', 'characters', dir)
+    const characterFiles = await fs.readdir(characterDir)
+    characterFiles.map(file => paths.push(`/public/characters/${dir}/${file}`))
+  })
+
+  return [...backgroundUrls, ...fontUrls, ...charactersUrls]
 }
 
 export default defineConfig(async () => {
