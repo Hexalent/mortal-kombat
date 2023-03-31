@@ -8,12 +8,14 @@ const packageRoot = packageDirectorySync()
 
 async function getImageUrls() {
   const backgroundDir = join(__dirname, 'public', 'background')
-
   const backgroundFiles = await fs.readdir(backgroundDir)
-
   const backgroundUrls = backgroundFiles.map(file => `/public/background/${file}`)
 
-  return [...backgroundUrls]
+  const fontDir = join(__dirname, 'public', 'fonts')
+  const fontFiles = await fs.readdir(fontDir)
+  const fontUrls = fontFiles.map(file => `/public/fonts/${file}`)
+
+  return [...backgroundUrls, ...fontUrls]
 }
 
 export default defineConfig(async () => {
