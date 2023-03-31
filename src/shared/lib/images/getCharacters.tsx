@@ -23,7 +23,9 @@ const buildCharacter = (data: CharacterData, index: number): Character => {
 }
 
 export const getCharacters = async (): Promise<Character[]> => {
-  const heroImages = import.meta.glob('/characters/*/*')
+  const heroImages = import.meta.glob('./characters/*/*')
+  console.log(heroImages)
+  console.log(import.meta.glob('/*/*'))
   const images = await Promise.all(Object.values(heroImages).map(importImage => importImage()))
   const imagePaths: string[] = images.map((image: any) => image.default)
 
