@@ -24,6 +24,8 @@ export const FighterSelect = () => {
     }
   }
 
+  console.log(characters)
+
   const isHeroSelected = selectedHeroes.length === 2
 
   return (
@@ -49,7 +51,7 @@ export const FighterSelect = () => {
             />
           </div>
           <div className='absolute bottom-2 left-20 font-russo text-xl font-bold text-white'>
-            {selectedHeroes[0] ? selectedHeroes[0].title.replace('_', ' ') : activeHero?.title.replace('_', ' ')}
+            {/*{selectedHeroes[0] ? selectedHeroes[0].title.replace('_', ' ') : activeHero?.title.replace('_', ' ')}*/}
           </div>
         </>
         {selectedHeroes[0] && (
@@ -63,7 +65,7 @@ export const FighterSelect = () => {
               />
             </div>
             <div className='absolute bottom-2 right-20 font-russo text-xl font-bold text-white'>
-              {selectedHeroes[1] ? selectedHeroes[1].title.replace('_', ' ') : activeHero?.title.replace('_', ' ')}
+              {/*{selectedHeroes[1] ? selectedHeroes[1].title.replace('_', ' ') : activeHero?.title.replace('_', ' ')}*/}
             </div>
           </>
         )}

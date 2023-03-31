@@ -23,13 +23,12 @@ const buildCharacter = (data: CharacterData, index: number): Character => {
 }
 
 export const getCharacters = async (): Promise<Character[]> => {
-  const heroImages = import.meta.glob('/public/characters/*/*') as Record<string, () => Promise<{ default: string }>>
+  const heroImages = import.meta.glob('/characters/*/*')
   const images = await Promise.all(Object.values(heroImages).map(importImage => importImage()))
+  const imagePaths: string[] = images.map((image: any) => image.default)
 
-  const characters: Record<string, CharacterData> = images.reduce((acc: Record<string, CharacterData>, image) => {
-    const path = image.default
+  const characters: Record<string, CharacterData> = imagePaths.reduce((acc: Record<string, CharacterData>, path) => {
     const name = path.split('/')[3]
-
     const character = acc[name] || { name, paths: [] }
     character.paths.push(path)
 
