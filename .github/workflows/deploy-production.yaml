@@ -31,7 +31,7 @@ jobs:
         run: yarn run lint
 
       - name: Build Web App
-        run: yarn nx run-many --target=build --projects=frontend
+        run: yarn run build
         shell: bash
 
       - name: Install Vercel CLI
